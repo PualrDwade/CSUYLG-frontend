@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/commentPage/commentPage",
+    "pages/index/index",
+    "pages/commentDetail/commentDetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}
