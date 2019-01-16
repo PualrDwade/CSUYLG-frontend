@@ -7,8 +7,8 @@
 /**
  * 进行登陆的api接口,获取sessionId与openId存入本地
  */
-const login = function() {
-  return new Promise(function(resolve, reject) {
+const login = function () {
+  return new Promise(function (resolve, reject) {
     const app = getApp()
     wx.login({
       success: res => {
@@ -16,7 +16,7 @@ const login = function() {
         wx.request({
           url: app.globalData.baseURL + '/api/user/login?code=' + res.code,
           method: "GET",
-          success: function(res) {
+          success: function (res) {
             if (res.data.code == 200) {
               console.log('发起后台登陆请求,结果为:', res, '同时写入本地缓存')
               wx.setStorageSync(
@@ -57,8 +57,8 @@ const login = function() {
 /**
  * 进行文章评论的api接口
  */
-const commentToPassage = function(commentDTO) {
-  return new Promise(function(resolve, reject) {
+const commentToPassage = function (commentDTO) {
+  return new Promise(function (resolve, reject) {
     const app = getApp()
     commentDTO.fromUid = wx.getStorageSync('openId')
     //使用promise封装请求
@@ -70,7 +70,7 @@ const commentToPassage = function(commentDTO) {
         'sessionId': wx.getStorageSync('sessionId')
       },
       data: JSON.stringify(commentDTO),
-      success: function(res) {
+      success: function (res) {
         if (res.data.code == 200) {
           console.log('评论成功', res)
           var response = {
@@ -84,7 +84,7 @@ const commentToPassage = function(commentDTO) {
           reject(response)
         }
       },
-      fail: function() {
+      fail: function () {
         var response = {
           status: 300
         }
@@ -98,8 +98,8 @@ const commentToPassage = function(commentDTO) {
 /**
  * 进行后端auth同步的api接口
  */
-const auth = function(userInfo) {
-  return new Promise(function(resolve, reject) {
+const auth = function (userInfo) {
+  return new Promise(function (resolve, reject) {
     const app = getApp()
     // 添加openId字段
     userInfo.id = wx.getStorageSync('openId')
@@ -114,7 +114,6 @@ const auth = function(userInfo) {
       },
       method: 'POST',
       success: res => {
-        console.log("auth api返回结果:", res)
         if (res.data.code == 200) {
           var response = {
             status: 200
@@ -143,11 +142,11 @@ const auth = function(userInfo) {
  * @Param:passageId:文章id
  * @Param:page:分页的页数
  */
-const getComments = function(passageId, page) {
-  return new Promise(function(resolve, reject) {
+const getComments = function (passageId, page) {
+  return new Promise(function (resolve, reject) {
     const app = getApp()
     wx.request({
-      url: app.globalData.baseURL + '/api/passage/' + passageId + '/comments?page='+page,
+      url: app.globalData.baseURL + '/api/passage/' + passageId + '/comments?page=' + page,
       method: 'GET',
       header: {
         'content-type': 'application/json',
@@ -177,8 +176,8 @@ const getComments = function(passageId, page) {
 /**
  * 删除回复内容api接口
  */
-const deleteComment = function(commentId) {
-  return new Promise(function(resolve, reject) {
+const deleteComment = function (commentId) {
+  return new Promise(function (resolve, reject) {
     const app = getApp()
     wx.request({
       url: app.globalData.baseURL + '/api/comment/' + commentId,
@@ -187,7 +186,7 @@ const deleteComment = function(commentId) {
         'sessionId': wx.getStorageSync('sessionId')
       },
       method: 'DELETE',
-      success: function(res) {
+      success: function (res) {
         if (res.data.code == 200) {
           console.log("删除评论api请求成功")
           var response = {
@@ -209,7 +208,7 @@ const deleteComment = function(commentId) {
           reject(response)
         }
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log("wx.request请求发起失败")
       },
     })
@@ -227,8 +226,8 @@ const deleteComment = function(commentId) {
  *   passageId:number
  * }
  */
-const getRefreshComments = function(refreshDTO) {
-  return new Promise(function(resolve, reject) {
+const getRefreshComments = function (refreshDTO) {
+  return new Promise(function (resolve, reject) {
     const app = getApp()
     console.log(refreshDTO)
     wx.request({
@@ -239,7 +238,7 @@ const getRefreshComments = function(refreshDTO) {
         'sessionId': wx.getStorageSync('sessionId')
       },
       method: 'POST',
-      success: function(res) {
+      success: function (res) {
         if (res.data.code == 200) {
           console.log('文章评论数据刷新成功,数据为:', res.data)
           var response = {
@@ -256,7 +255,7 @@ const getRefreshComments = function(refreshDTO) {
           reject(response)
         }
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log('wx.request请求失败')
         var response = {
           status: 300
@@ -277,5 +276,5 @@ module.exports = {
   auth: auth,
   deleteComment: deleteComment,
   login: login,
-  getRefreshComments:getRefreshComments
+  getRefreshComments: getRefreshComments
 }

@@ -17,14 +17,22 @@ const formatNumber = n => {
 
 /**
  * 验证输入内容是否符合规则
+ * 规则:长度不小于10个字,
+ * 不大于50个字,不能为空(空字符串)
  */
-const contentValidate = function(conent){
-  return true
+const contentValidate = function (conent) {
+  if (content.length < 10 || conent.length > 50) {
+    return false
+  }
+  //使用正则表达式匹配
+  let regu = "^[ ]+$"
+  let re = new RegExp(regu)
+  return !re.test(content)
 }
 
 module.exports = {
   formatTime: formatTime,
-  contentValidate:contentValidate
+  contentValidate: contentValidate
 }
 
 

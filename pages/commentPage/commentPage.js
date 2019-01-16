@@ -2,6 +2,7 @@
 const app = getApp()
 //引入api
 import * as api from '../../utils/api.js'
+
 import {
   contentValidate
 } from '../../utils/util.js'
@@ -36,7 +37,7 @@ Page({
   },
 
   //初始化输入参数
-  initInputParams: function() {
+  initInputParams: function () {
     this.setData({
       inputArea: {
         sending: false,
@@ -52,7 +53,7 @@ Page({
   },
 
   //重设起始楼层与结束楼层的函数
-  refreshFloor: function() {
+  refreshFloor: function () {
     let comments = this.data.commentList
     console.log(comments)
     this.setData({
@@ -63,7 +64,7 @@ Page({
   },
 
   //输入linechange
-  linechange: function(e) {
+  linechange: function (e) {
     this.setData({
       ["inputArea.line"]: e.detail.lineCount,
     })
@@ -71,7 +72,7 @@ Page({
 
 
   //输入框的显示函数,关键数据是设置评论对象
-  showInput: function(e) {
+  showInput: function (e) {
     console.log("此处展示输入框")
     if (e.currentTarget.dataset.type == 0) {
       //如果是0,表示评论原文
@@ -101,7 +102,7 @@ Page({
   },
 
   //当聚焦时，将键盘拉起
-  inputFocus: function(e) {
+  inputFocus: function (e) {
     console.log('键盘拉起', e)
     this.setData({
       ["inputArea.bottomH"]: e.detail.height + 290,
@@ -113,7 +114,7 @@ Page({
    * 当用户正在输入时，将输入值赋给inputArea.content
    *
    */
-  inputing: function(e) {
+  inputing: function (e) {
     this.setData({
       ["inputArea.content"]: e.detail.value
     })
@@ -124,7 +125,7 @@ Page({
   /**当失去聚焦时，判断content是否为空，为空的话则设置成“请输入评论”
    *
    * */
-  inputUnFocus: function(e) {
+  inputUnFocus: function (e) {
     console.log("失去焦点")
     this.setData({
       ["inputArea.bottomH"]: 0,
@@ -152,21 +153,24 @@ Page({
    * 进行评论(文章,回复,评论),绑定视图实践监听
    * 判断type,分发给不同函数执行
    */
-
-  sendText: function(e) {
+  sendText: function (e) {
     //进行授权操作
     app.setAuthStatus().then(res => {
       if (res.status == 200) {
-        //首先判断回复内容,不能为空s
+        console.log('授权成功!')
+        console.log('输入的内容为:', this.data.inputArea.content)
         if (!contentValidate(this.data.inputArea.content)) {
+          console.log('输入内容不合格')
           wx.showToast({
-            title: '评论内容不能为空,长度不能大于100',
-            icon: 'none'
+            title: '评论内容不能为空,长度在10-50字之间~',
+            icon: 'none',
+            duration: 1000
           })
-          return
+          // return
         }
         //重要~判断评论的具体类型
         if (this.data.inputArea.type == 0) {
+          console.log('评论类型:',this.data.inputArea.type)
           //0代表对文章进行评论
           let commentDTO = {
             content: this.data.inputArea.content,
@@ -191,7 +195,7 @@ Page({
                   api.getRefreshComments(refreshDTO).then(res => {
                     if (res.status == 200) {
                       let newComments = res.data.data.
-                      newComments.concat(res.data.data.refreshComments)
+                        newComments.concat(res.data.data.refreshComments)
                       this.setData({
                         commentList: newComments
                       })
@@ -248,7 +252,7 @@ Page({
   /**
    * 跳转到评论详情的函数
    */
-  showCommentDetail: function(e) {
+  showCommentDetail: function (e) {
     console.log(e.currentTarget.dataset.commentid)
     wx.navigateTo({
       url: '../commentDetail/commentDetail?commentId=' + e.currentTarget.dataset.commentid,
@@ -259,7 +263,7 @@ Page({
   /**
    * 取消点赞的函数
    */
-  starHandle: function(e) {
+  starHandle: function (e) {
     console.log("对" + e.currentTarget.dataset.commentid + "进行点赞操作")
   },
 
@@ -267,7 +271,7 @@ Page({
   /**
    * 点击用户头像的事件处理函数
    */
-  clickUser: function(e) {
+  clickUser: function (e) {
     console.log("点击用户" + e.currentTarget.dataset.openid)
   },
 
@@ -275,7 +279,7 @@ Page({
   /**
    * 复制操作监听函数
    */
-  copy: function(e) {
+  copy: function (e) {
     console.log("长按")
     wx.setClipboardData({
       data: e.currentTarget.dataset.content,
@@ -291,7 +295,7 @@ Page({
   /**
    * 点击删除评论的事件处理函数
    */
-  deleteComment: function(e) {
+  deleteComment: function (e) {
     wx.showModal({
       title: '提示',
       content: '确认删除该评论嘛~',
@@ -349,7 +353,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     //从url中获取文章id
     if (options.articleID) {
       this.setData({
@@ -388,28 +392,28 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
     console.log('页面渲染完成')
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
@@ -417,7 +421,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    * 下拉刷新的函数
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     console.log("下拉动作")
     wx.getSystemInfo({
       success(res) {
@@ -430,7 +434,7 @@ Page({
    * 页面上拉触底事件的处理函数
    * 加载更多评论
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     //显示加载更多的加载icon,
     this.setData({
       isHideLoadMore: true
@@ -472,7 +476,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
     console.log("点击分享")
   }
 })
