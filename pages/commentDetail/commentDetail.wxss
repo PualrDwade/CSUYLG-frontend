@@ -21,7 +21,8 @@
   font-size: 32rpx;
 }
 .floor,.date,.iconArea{
-  color: #aeaaaa
+  color: #aeaaaa;
+  font-size: 28rpx
 }
 .avatarArea{
   width: 115rpx;

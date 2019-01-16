@@ -8,9 +8,9 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.94",
-	"appid": "wx94615bd0bc6e1d73",
-	"projectname": "%E5%87%AD%E8%AE%BA",
+	"libVersion": "2.5.0",
+	"appid": "wxf7597e992f6dbaa7",
+	"projectname": "csuylgpl",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
@@ -30,14 +30,8 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
-			"list": [
-				{
-					"id": -1,
-					"name": "test",
-					"pathName": "pages/commentPage/commentPage"
-				}
-			]
+			"current": -1,
+			"list": []
 		}
 	}
 }

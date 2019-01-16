@@ -14,6 +14,17 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-module.exports = {
-  formatTime: formatTime
+
+/**
+ * 验证输入内容是否符合规则
+ */
+const contentValidate = function(conent){
+  return true
 }
+
+module.exports = {
+  formatTime: formatTime,
+  contentValidate:contentValidate
+}
+
+

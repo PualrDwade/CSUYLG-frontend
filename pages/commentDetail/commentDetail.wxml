@@ -5,34 +5,34 @@
     <view class='comment'>  
       <view class='comment2'>
         <!--左侧头像区-->
-        <view class='avatarArea' data-openid='{{comment.openID}}' bindtap='clickUser'>
+        <view class='avatarArea' data-openid='{{comment.fromUid}}' bindtap='clickUser'>
           <image class='avatar' src='{{comment.avatar}}'></image>
         </view>
         <!--右侧具体信息区-->
         <view class='commentRightArea'>
           <view class='userArea'>
-            <view class='userName' hover-class='hover' data-openid='{{comment.openID}}' bindtap='clickUser'>
-              {{comment.userName}}
+            <view class='userName' hover-class='hover' data-openid='{{comment.fromUid}}' bindtap='clickUser'>
+              {{comment.username}}
             </view>
             <view class='floor'>
-              #{{comment.floor}}
+              {{comment.floor}}楼
             </view>
           </view>
           <!--评论内容-->
-          <view class='commentContentArea' data-commentid='{{comment.commentID}}'  data-content='{{comment.content}}' bindtap='clickComment' hover-class='hover' bindlongpress='copy'>
+          <view class='commentContentArea' data-commentid='{{comment.id}}'  data-content='{{comment.content}}' bindtap='clickComment' hover-class='hover' bindlongpress='copy'>
             <text>{{comment.content}}</text>
           </view>
           <!--点赞评论转发区-->
           <view class='dealArea'>
             <view class='dealLeft'>
-              <view class='date'>{{comment.date}}</view>
-              <view wx:if="{{comment.power}}" class='delete' bindtap='deleteComment' data-commentid='{{commetn.commentID}}'>删除</view>
+              <view class='date'>{{comment.createTime}}</view>
+              <view wx:if="{{comment.power}}" class='delete' bindtap='deleteComment' data-commentid='{{comment.id}}'>删除</view>
             </view>
-            <view class='dealRight' data-commentid='{{comment.commentID}}' bindtap='zanDeal'>
+            <view class='dealRight' data-commentid='{{comment.id}}' bindtap='starHandle'>
               <view class='iconArea'>
                 <view class='zanNum'>{{comment.zanNum}}</view>
-                <image wx:if="{{comment.ifZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
-                <image wx:if="{{!comment.ifZan}}" src='../../icons/zan.png' class='Icon'></image>
+                <image wx:if="{{comment.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
+                <image wx:if="{{!comment.isZan}}" src='../../icons/zan.png' class='Icon'></image>
               </view>
             </view>
           </view>
@@ -48,30 +48,32 @@
     <view class='reply'  wx:key="{{index}}" wx:for="{{comment.replyList}}">   
       <view class='comment2'>
         <!--左侧头像区-->
-        <view class='avatarArea' data-openid='{{item.from_UserID}}' bindtap='clickUser'>
-          <image class='avatar' src='{{item.from_Avatar}}'></image>
+        <view class='avatarArea' data-openid='{{item.fromUid}}' bindtap='clickUser'>
+          <image class='avatar' src='{{item.avatar}}'></image>
         </view>
         <!--右侧具体信息区-->
         <view class='commentRightArea'>
           <view class='userArea'>
-            <view class='userName' hover-class='hover' data-openid='{{item.from_UserID}}' bindtap='clickUser'>
-              {{item.from_UserName}}
+            <view class='userName' hover-class='hover' data-openid='{{item.fromUname}}' bindtap='clickUser'>
+              {{item.fromUname}}
             </view>
             <view class='floor'>
-              #{{index+1}}
+              {{index+1}}楼
             </view>
           </view>
           <!--评论内容-->
           <view class='commentContentArea' data-commentid='{{comment.commentID}}'  data-content='{{comment.content}}' bindtap='clickComment' hover-class='hover' bindlongpress='copy'>
-            <text wx:if="{{item.type}}">回复</text>
-            <text class='userName'>{{item.to_UserName}}</text>
+          <!-- 如果是回复的回复,则特别显示回复效果 -->
+            <text wx:if="{{item.replyType==2}}">回复</text>
+            <text wx:if="{{item.replyType==2}}"
+             class='userName'>{{item.toUname}}:</text>
             <text>{{item.content}}</text>
           </view>
           <!--点赞评论转发区-->
           <view class='dealArea'>
             <view class='dealLeft'>
-              <view class='date'>{{comment.date}}</view>
-              <view wx:if="{{item.power}}" class='delete' bindtap='deleteComment' data-commentid='{{commetn.commentID}}'>删除</view>
+              <view class='date'>{{comment.createTime}}</view>
+              <view wx:if="{{item.power}}" class='delete' bindtap='deleteComment' data-commentid='{{comment.id}}'>删除</view>
             </view>
             <view class='dealRight' data-commentid='{{comment.commentID}}' bindtap='zanDeal'>
               <view class='iconArea'>

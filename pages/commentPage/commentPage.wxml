@@ -2,16 +2,16 @@
 <view>
   <!--普通评论区-->
   <view class='header'>
-    <view>
-      评论({{total}})
+    <view class='header-font'>
+      最新评论
     </view>
   </view>
   <view class='commentArea'>
     <!--一条评论-->
-    <view class='comment' wx:key="{{index}}" wx:for="{{commentList}}">  
+    <view class='comment' wx:key="{{index}}" wx:for="{{commentList}}">
       <view class='comment2'>
         <!--左侧头像区-->
-        <view class='avatarArea' data-openid='{{item.fromUid}}' bindtap='clickUser'>
+        <view class='avatarArea' data-openId='{{item.fromUid}}' bindtap='clickUser'>
           <image class='avatar' src='{{item.avatar}}'></image>
         </view>
         <!--右侧具体信息区-->
@@ -21,20 +21,20 @@
               {{item.username}}
             </view>
             <view class='floor'>
-              #{{item.floor}}
+              {{item.floor}}楼
             </view>
           </view>
           <!--评论内容-->
-          <view class='commentContentArea'  data-commentid='{{item.id}}'  data-content='{{item.content}}' data-type='1' data-username='{{item.username}}' bindtap='showInput' hover-class='hover' bindlongpress='copy'>
+          <view class='commentContentArea' data-commentid='{{item.id}}' data-content='{{item.content}}' data-type='1' data-username='{{item.username}}' bindtap='showInput' hover-class='hover' bindlongpress='copy'>
             <text>{{item.content}}</text>
           </view>
           <!--操作区-->
           <view class='dealArea'>
             <view class='dealLeft'>
               <view class='date'>{{item.createTime}}</view>
-              <view wx:if="{{item.fromUid==openId}}" class='delete' bindtap='deleteComment' data-commentid='{{item.id}}'>删除</view>
+              <view wx:if="{{item.fromUid==openId}}" class='delete' bindtap='deleteComment' data-commentId='{{item.id}}'>删除</view>
             </view>
-            <view class='dealRight' data-commentid='{{item.id}}' bindtap='zanDeal'>
+            <view class='dealRight' data-commentid='{{item.id}}' bindtap='starHandle'>
               <view class='iconArea'>
                 <view class='zanNum'>{{item.zanNum}}</view>
                 <image wx:if="{{item.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
@@ -42,20 +42,24 @@
               </view>
             </view>
           </view>
+
           <!--评论对应的回复区-->
-          <view class='replyArea' data-commentid='{{item.commentID}}' bindtap='jumpCommentDetailPage'>
+          <!-- 修改,点击回复,弹出输入框进行输入 -->
+          <view wx:if="{{item.replyList.length!=0}}" class='replyArea' data-commentId='{{item.id}}'>
             <!--一条回复-->
-            <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' bindlongpress='copy'>
-              <view wx:if="{{item.show | ((item.replyNum==4) & rindex<4) |(!(item.replyNum==4) & rindex<3) }}">
-                <text class='username' >{{i.fromUname}}</text>
-                <text decode="{{true}}" space="{{true}}" wx:if="{{i.type}}">&nbsp;回复&nbsp;</text>
-                <text class='username'>{{i.toUname}}</text>
+            <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2' bindlongpress='copy' data-toid='{{i.id}}' bindtap='showInput'>
+              <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}">
+                <text class='userName'>{{i.fromUname}}</text>
+                <text decode="{{true}}" space="{{true}}" wx:if="{{i.replyType==2}}">&nbsp;回复&nbsp;</text>
+                <text class='userName' wx:if="{{i.replyType==2}}">{{i.toUname}}</text>
                 <text decode="{{true}}" space="{{true}}">&nbsp;:&nbsp;{{i.content}}</text>
               </view>
             </view>
-            <view wx:if="{{item.replyNum>4}}" class='username' hover-class='hover'> 查看全部{{item.replyNum}}条回复</view>
+            <view wx:if="{{item.replyNum>4}}" bindtap='showCommentDetail' data-commentid='{{item.id}}' class='username' hover-class='hover'> 查看全部
+              <text class='userName'>{{item.replyNum}}</text>条回复</view>
           </view>
         </view>
+
       </view>
     </view>
     <view>
@@ -75,10 +79,13 @@
     <!--聚焦之后展示此框框-->
     <view class='focusInputArea' wx:if="{{inputArea.sending}}">
       <!--当用户点击进入评论时才会弹出此界面-->
-      <textarea  placeholder='友善的评论是交流的起点' class='textArea' bindfocus='inputFocus' bindblur='inputUnFocus' auto-focus='true' bindinput='inputing' bindconfirm='sendText' fixed='true' show-confirm-bar='{{false}}' auto-height='{{inputArea.line<4}}' adjust-position="{{false}}" cursor-spacing="30rpx;" bindlinechange="linechange" value="{{inputArea.content}}"></textarea>
+      <textarea placeholder='友善的评论是交流的起点' class='textArea' bindfocus='inputFocus' bindblur='inputUnFocus' auto-focus='true' bindinput='inputing' bindconfirm='sendText' fixed='true' show-confirm-bar='{{false}}' auto-height='{{inputArea.line<4}}' adjust-position="{{false}}"
+        cursor-spacing="30rpx;" bindlinechange="linechange" value="{{inputArea.content}} "></textarea>
     </view>
-    <view class='inputArea'><!--纵向居中-->
-      <view class="input"><!--横向排列-->
+    <view class='inputArea'>
+      <!--纵向居中-->
+      <view class="input">
+        <!--横向排列-->
         <!--表情-->
         <view class='emotionArea'>
           <image class='emotion' src='../../icons/emotion.png'></image>
@@ -89,8 +96,8 @@
         </view>
         <!--发送按钮-->
         <view class='buttonArea' bindtap='sendText'>
-          <view class='button' wx:if="{{commentIsNull}}">发送</view>
-          <view class='button' wx:if="{{!commentIsNull}}">发送</view>
+          <view class='button' data-passageId='{{articleID}}' wx:if="{{commentIsNull}}">发送</view>
+          <view class='button' data-passageId='{{articleID}}' wx:if="{{!commentIsNull}}">发送</view>
         </view>
       </view>
     </view>

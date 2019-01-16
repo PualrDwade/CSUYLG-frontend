@@ -6,6 +6,10 @@
   flex-direction: column;
   justify-content: center;
 }
+.header-font{
+  margin-left: 10px;
+  font-size: 34rpx;
+}
 .commentArea{
   width: 750rpx;
   display: flex;
@@ -24,7 +28,8 @@
   font-size: 32rpx
 }
 .floor,.date,.iconArea,.header,.inputUser{
-  color: #aeaaaa
+  color: #aeaaaa;
+  font-size: 28rpx;
 }
 .avatarArea{
   width: 105rpx;
@@ -94,6 +99,7 @@
   background-color: #f4f4f4;
   width: 100%;
 }
+
 .reply{
   display: flex;
   flex-direction: row;
