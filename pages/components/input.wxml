@@ -1,0 +1,4 @@
+<!--pages/components/input.wxml-->
+<view class="section">
+ <input type="emoji" placeholder="这是一个带有表情的输入框" />
+</view>

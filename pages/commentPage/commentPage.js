@@ -115,6 +115,7 @@ Page({
    *
    */
   inputing: function (e) {
+    console.log('输入回调的值为:',e.detail)
     this.setData({
       ["inputArea.content"]: e.detail.value
     })
@@ -158,15 +159,14 @@ Page({
     app.setAuthStatus().then(res => {
       if (res.status == 200) {
         console.log('授权成功!')
-        console.log('输入的内容为:', this.data.inputArea.content)
         if (!contentValidate(this.data.inputArea.content)) {
           console.log('输入内容不合格')
           wx.showToast({
             title: '评论内容不能为空,长度在10-50字之间~',
             icon: 'none',
-            duration: 1000
+            duration: 2000
           })
-          // return
+          return
         }
         //重要~判断评论的具体类型
         if (this.data.inputArea.type == 0) {

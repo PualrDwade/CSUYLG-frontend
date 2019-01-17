@@ -20,10 +20,11 @@ const formatNumber = n => {
  * 规则:长度不小于10个字,
  * 不大于50个字,不能为空(空字符串)
  */
-const contentValidate = function (conent) {
-  if (content.length < 10 || conent.length > 50) {
+const contentValidate = function (content) {
+  if (content.length < 10 || content.length > 50) {
     return false
   }
+  console.log('输入内容长度:',content.length)
   //使用正则表达式匹配
   let regu = "^[ ]+$"
   let re = new RegExp(regu)

@@ -2,6 +2,9 @@
 <view>
   <!-- 普通评论区 -->
   <view class='header'>
+    <view class="section">\
+      <input placeholder="这是一个带有表情的输入框" />
+    </view>
     <view class='header-font'>最新评论</view>
   </view>
   <view class='commentArea'>
@@ -47,9 +50,7 @@
             <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2' bindlongpress='copy' data-toid='{{i.id}}' bindtap='showInput'>
               <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}">
                 <text class='userName'>{{i.fromUname}}</text>
-                <text decode="{{true}}" space="{{true}}" wx:if="{{i.replyType==2}}">
-                  &nbsp;回复&nbsp;
-                </text>
+                <text decode="{{true}}" space="{{true}}" wx:if="{{i.replyType==2}}">回复</text>
                 <text class='userName' wx:if="{{i.replyType==2}}">{{i.toUname}}</text>
                 <text decode="{{true}}" space="{{true}}">&nbsp;:&nbsp;{{i.content}}</text>
               </view>
@@ -76,7 +77,7 @@
     <view class='tipsArea' wx:if="{{inputArea.sending}}">
       <view class=' inputUser'>评论给 {{inputArea.sendUser}}</view>
     </view>
-    <!-- 聚焦之后展示此框框 -->
+    <!-- 聚焦之后展示此框框,让用户进行输入 -->
     <view class='focusInputArea' wx:if="{{inputArea.sending}}">
       <!-- 当用户点击进入评论时才会弹出此界面 -->
       <textarea placeholder='友善的评论是交流的起点' class='textArea' bindfocus='inputFocus' bindblur='inputUnFocus' auto-focus='true' bindinput='inputing' bindconfirm='sendText' fixed='true' show-confirm-bar='{{false}}' auto-height='{{inputArea.line<4}}' adjust-position="{{false}}" cursor-spacing="30rpx;" bindlinechange="linechange" value="{{inputArea.content}} "></textarea>
