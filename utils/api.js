@@ -260,6 +260,44 @@ const getRefreshComments = function (refreshDTO) {
   })
 }
 
+/**
+ * 根据评论id得到评论的详情内容
+ * @param {评论的id} commentId 
+ */
+const getCommentDetail = function (commentId) {
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: getApp().globalData.baseURL + '/api/comment/' + commentId + '/replys',
+      method: 'GET',
+      success: res => {
+        if (res.data.code == 200) {
+          console.log('评论详情api请求成功,返回消息:', res.data)
+          var response = {
+            status: 200,
+            data: res.data.data
+          }
+          resolve(response)
+        }
+        else {
+          //请求失败,直接把log显示给前端
+          var response = {
+            status: 300,
+            message: res.data.message
+          }
+          reject(response)
+        }
+      },
+      fail: function (res) {
+        console.log('wx.request请求失败')
+        var response = {
+          status: 300,
+          message: '请求失败~请检查网络哟'
+        }
+        reject(response)
+      }
+    })
+  })
+}
 
 /**
  * 模块导出
@@ -270,5 +308,6 @@ module.exports = {
   auth: auth,
   deleteComment: deleteComment,
   login: login,
-  getRefreshComments: getRefreshComments
+  getRefreshComments: getRefreshComments,
+  getCommentDetail: getCommentDetail
 }
