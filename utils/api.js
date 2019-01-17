@@ -9,12 +9,11 @@
  */
 const login = function () {
   return new Promise(function (resolve, reject) {
-    const app = getApp()
+    console.log("得到了app")
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
         wx.request({
-          url: app.globalData.baseURL + '/api/user/login?code=' + res.code,
+          url: getApp().globalData.baseURL + '/api/user/login?code=' + res.code,
           method: "GET",
           success: function (res) {
             if (res.data.code == 200) {
@@ -59,11 +58,10 @@ const login = function () {
  */
 const commentToPassage = function (commentDTO) {
   return new Promise(function (resolve, reject) {
-    const app = getApp()
     commentDTO.fromUid = wx.getStorageSync('openId')
     //使用promise封装请求
     wx.request({
-      url: app.globalData.baseURL + '/api/comment',
+      url: getApp().globalData.baseURL + '/api/comment',
       method: 'POST',
       header: {
         'content-type': 'application/json',
@@ -100,12 +98,11 @@ const commentToPassage = function (commentDTO) {
  */
 const auth = function (userInfo) {
   return new Promise(function (resolve, reject) {
-    const app = getApp()
     // 添加openId字段
     userInfo.id = wx.getStorageSync('openId')
     console.log("授权状态发起,请求数据为:\n", userInfo)
     wx.request({
-      url: app.globalData.baseURL + '/api/user/auth',
+      url: getApp().globalData.baseURL + '/api/user/auth',
       dataType: 'json',
       data: JSON.stringify(userInfo),
       header: {
@@ -144,9 +141,8 @@ const auth = function (userInfo) {
  */
 const getComments = function (passageId, page) {
   return new Promise(function (resolve, reject) {
-    const app = getApp()
     wx.request({
-      url: app.globalData.baseURL + '/api/passage/' + passageId + '/comments?page=' + page,
+      url: getApp().globalData.baseURL + '/api/passage/' + passageId + '/comments?page=' + page,
       method: 'GET',
       header: {
         'content-type': 'application/json',
@@ -178,9 +174,8 @@ const getComments = function (passageId, page) {
  */
 const deleteComment = function (commentId) {
   return new Promise(function (resolve, reject) {
-    const app = getApp()
     wx.request({
-      url: app.globalData.baseURL + '/api/comment/' + commentId,
+      url: getApp().globalData.baseURL + '/api/comment/' + commentId,
       header: {
         'content-type': 'application/json',
         'sessionId': wx.getStorageSync('sessionId')
@@ -228,10 +223,9 @@ const deleteComment = function (commentId) {
  */
 const getRefreshComments = function (refreshDTO) {
   return new Promise(function (resolve, reject) {
-    const app = getApp()
     console.log(refreshDTO)
     wx.request({
-      url: app.globalData.baseURL + '/api/passage/comments/refresh',
+      url: getApp().globalData.baseURL + '/api/passage/comments/refresh',
       data: JSON.stringify(refreshDTO),
       header: {
         'content-type': 'application/json',

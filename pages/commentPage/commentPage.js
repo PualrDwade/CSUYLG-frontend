@@ -2,17 +2,17 @@
 const app = getApp()
 //引入api
 import * as api from '../../utils/api.js'
-
+//引入service层
 import {
   contentValidate
 } from '../../utils/util.js'
-
 Page({
 
   /**
    * 页面的初始数据和视图层绑定
    */
   data: {
+    // commentService:new commentService(),
     commentList: [],
     zanList: [],
     startFloor: null, //当前数据加载的起始楼层
@@ -21,38 +21,30 @@ Page({
     baseUrl: app.globalData.baseURL,
     isHideLoadMore: false,
     articleID: "test1",
-    openId: null,
-    sessionId: null,
+    openId: null,//绑定全局openId
     sending: false, //判断输入框当前是否在输入状态
     inputArea: {
-      sending: false,
-      sendUser: "原文",
-      content: "",
-      type: 0, //0表示评论文章，1表示回复评论，2表示回复回复
-      toID: "", //默认是对文章进行评论的
+      // inputFocus: false,//输入聚焦
+      inputValue: '',//input区域输入的内容
       bottomH: 0,
-      line: 0,
-      commentIsNull: true, //判断input的输入框里面是否为空
     }
   },
 
-  //初始化输入参数
+  /**
+   * 初始化inputArea的输入参数
+   */
   initInputParams: function () {
     this.setData({
       inputArea: {
-        sending: false,
-        sendUser: "赵日天",
-        content: "",
-        type: 0, //0表示评论文章，1表示回复评论，2表示回复回复
-        toID: "", //默认是对文章进行评论的
+        inputValue: '',
         bottomH: 0,
-        line: 0,
-        commentIsNull: true, //判断input的输入框里面是否为空
       }
     })
   },
 
-  //重设起始楼层与结束楼层的函数
+  /**
+   * 重设起始楼层与结束楼层的函数
+   */
   refreshFloor: function () {
     let comments = this.data.commentList
     console.log(comments)
@@ -63,50 +55,27 @@ Page({
     })
   },
 
-  //输入linechange
-  linechange: function (e) {
+
+  /**
+   * 监听键盘的输入事件
+   * @param {键盘输入事件} e 
+   */
+  bindKeyInput: function (e) {
     this.setData({
-      ["inputArea.line"]: e.detail.lineCount,
+      ["inputArea.inputValue"]: e.detail.value//设置值
     })
+    console.log('键盘输入,传入的值为:', e)
   },
 
 
-  //输入框的显示函数,关键数据是设置评论对象
-  showInput: function (e) {
-    console.log("此处展示输入框")
-    if (e.currentTarget.dataset.type == 0) {
-      //如果是0,表示评论原文
-      this.setData({
-        ["inputArea.sending"]: true,
-        ["inputArea.type"]: 0,
-        ["inputArea.sendUser"]: "原文",
-        ["inputArea.toID"]: this.data.articleID,
-      })
-    } else if (e.currentTarget.dataset.type == 1) {
-      //如果是1,表示回复评论
-      this.setData({
-        ["inputArea.sending"]: true,
-        ["inputArea.type"]: 1,
-        ["inputArea.sendUser"]: e.currentTarget.dataset.username,
-        ["inputArea.toID"]: e.currentTarget.dataset.commentid
-      })
-    } else if (e.currentTarget.dataset.type == 2) {
-      //如果是2,表示回复回复
-      this.setData({
-        ["inputArea.sending"]: true,
-        ["inputArea.type"]: 1,
-        ["inputArea.sendUser"]: e.currentTarget.dataset.username,
-        ["inputArea.toID"]: e.currentTarget.dataset.replyid
-      })
-    }
-  },
-
-  //当聚焦时，将键盘拉起
-  inputFocus: function (e) {
-    console.log('键盘拉起', e)
-    this.setData({
-      ["inputArea.bottomH"]: e.detail.height + 290,
-    })
+  /**
+   * 手机键盘输入完成,点击小键盘函数触发,发送评论
+   * @param {键盘完成输入事件} e 
+   */
+  bindInputConfirm: function (e) {
+    console.log('键盘输入完成,数据为:', e.detail.value)
+    //调用评论函数进行评论
+    this.sendText()
   },
 
 
@@ -115,7 +84,7 @@ Page({
    *
    */
   inputing: function (e) {
-    console.log('输入回调的值为:',e.detail)
+    console.log('输入回调的值为:', e.detail)
     this.setData({
       ["inputArea.content"]: e.detail.value
     })
@@ -136,31 +105,39 @@ Page({
   },
 
 
-
   /**
-   * 评论给评论
+   * 刷新文章的评论数据
+   * @param {评论刷新数据} refreshDTO 
    */
-
-  /**
-   * 评论给回复
-   */
-
-  /**
-   * 评论给文章
-   */
-
+  refreshComments: function (refreshDTO) {
+    api.getRefreshComments(refreshDTO).then(res => {
+      if (res.status == 200) {
+        let newComments = res.data.data.
+          newComments.concat(res.data.data.refreshComments)
+        this.setData({
+          commentList: newComments
+        })
+        //刷新楼层
+        this.refreshFloor()
+      }
+    }).catch(res => {
+      wx.showToast({
+        title: '刷新评论失败~请检查网络',
+        icon: 'none',
+        duration: 1500
+      })
+    })
+  },
 
   /**
    * 进行评论(文章,回复,评论),绑定视图实践监听
    * 判断type,分发给不同函数执行
    */
-  sendText: function (e) {
+  sendText: function () {
     //进行授权操作
-    app.setAuthStatus().then(res => {
+    app.isAuthStatus().then(res => {
       if (res.status == 200) {
-        console.log('授权成功!')
-        if (!contentValidate(this.data.inputArea.content)) {
-          console.log('输入内容不合格')
+        if (!contentValidate(this.data.inputArea.inputValue)) {
           wx.showToast({
             title: '评论内容不能为空,长度在10-50字之间~',
             icon: 'none',
@@ -168,61 +145,63 @@ Page({
           })
           return
         }
-        //重要~判断评论的具体类型
-        if (this.data.inputArea.type == 0) {
-          console.log('评论类型:',this.data.inputArea.type)
-          //0代表对文章进行评论
-          let commentDTO = {
-            content: this.data.inputArea.content,
-            fromUid: app.globalData.openId,
-            passageId: this.data.articleID
-          }
-          api.commentToPassage(commentDTO).then(res => {
-            if (res.status == 200) {
-              wx.showToast({
-                title: '评论成功',
-                icon: 'success',
-                duration: 1000,
-                complete: () => {
-                  //清空输入框
-                  this.initInputParams()
-                  //添加成功完成的回调函数,刷新页面数据
-                  let refreshDTO = {
-                    passageId: this.data.articleID,
-                    startFloor: this.data.startFloor,
-                    endFloor: this.data.endFloor
-                  }
-                  api.getRefreshComments(refreshDTO).then(res => {
-                    if (res.status == 200) {
-                      let newComments = res.data.data.
-                        newComments.concat(res.data.data.refreshComments)
-                      this.setData({
-                        commentList: newComments
-                      })
-                      this.refreshFloor()
-                    }
-                  }).catch(res => {
-                    wx.showToast({
-                      title: '刷新评论失败~请检查网络',
-                      icon: 'none',
-                      duration: 1500
-                    })
-                  })
+        //构造评论数据DTO
+        let commentDTO = {
+          content: this.data.inputArea.inputValue,
+          fromUid: app.globalData.openId,
+          passageId: this.data.articleID
+        }
+        api.commentToPassage(commentDTO).then(res => {
+          if (res.status == 200) {
+            wx.showToast({
+              title: '评论成功',
+              icon: 'success',
+              duration: 1000,
+              complete: () => {
+                //清空输入框
+                this.initInputParams()
+                //添加成功完成的回调函数,刷新页面数据
+                let refreshDTO = {
+                  passageId: this.data.articleID,
+                  startFloor: this.data.startFloor,
+                  endFloor: this.data.endFloor
                 }
+                //刷新数据
+                this.refreshComments(refreshDTO)
+              }
+            })
+          }
+        }).catch(res => {
+          if (res.status == 401) {
+            wx.showToast({
+              title: '登陆状态失效,请重试',
+              icon: 'none',
+              duration: 1000
+            })
+            //重新登陆
+            api.login().then((result) => {
+              wx.showToast({
+                title: '已经为您重新登陆',
+                icon: 'none',
+                duration: 1000
               })
-            }
-          }).catch(res => {
+            }).catch((err) => {
+              wx.showToast({
+                title: '已经为您重新登陆',
+                icon: 'none',
+                duration: 1000
+              })
+            });
+          }
+          else {
             wx.showToast({
               title: '评论失败~请检查网络',
               icon: 'none',
               duration: 1000
             })
-          })
-        } else if (this.data.inputArea.type == 1) {
-          console.log('回复评论')
-        } else if (this.data.inputArea.type == 2) {
-          console.log('回复回复')
-        }
+            console.log(res)
+          }
+        })
       }
     }).catch(res => {
       if (res.status == 300) {
@@ -354,37 +333,40 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //得到promise的callback之后设置数据,强行维持同步请求
+    app.globalData.hasLoginStatus.then(() => {
+      //设置(页面级别)sessionId和openId
+      this.setData({
+        openId: wx.getStorageSync('openId'),
+      })
+    }).catch(() => {
+      wx.showToast({
+        title: '登陆状态获取失败',
+        icon: 'none'
+      })
+    })
+
     //从url中获取文章id
     if (options.articleID) {
       this.setData({
         articleID: options.articleID,
       })
     }
-    api.login().then(res => {
-      console.log('登录成功')
-      //设置(页面级别)sessionId和openId
-      this.setData({
-        openId: wx.getStorageSync('openId'),
-        sessionId: wx.getStorageSync('sessionId')
-      })
-      //登陆成功,使用用户态获取数据
-      api.getComments(this.data.articleID, this.data.page).then(res => {
-        if (res.status == 200) {
-          //刷新楼层数
-          this.setData({
-            commentList: res.data.data
-          })
-          this.refreshFloor()
-        }
-      }).catch(res => {
-        console.log(res)
-        wx.showModal({
-          title: '提示',
-          content: '文章评论获取失败,请检查网络~',
+    //随后发起api请求
+    api.getComments(this.data.articleID, this.data.page).then(res => {
+      if (res.status == 200) {
+        //刷新楼层数
+        this.setData({
+          commentList: res.data.data
         })
-      })
+        this.refreshFloor()
+      }
     }).catch(res => {
-      console.log('登录失败')
+      console.log(res)
+      wx.showModal({
+        title: '提示',
+        content: '文章评论获取失败,请检查网络~',
+      })
     })
   },
 
@@ -422,12 +404,12 @@ Page({
    * 下拉刷新的函数
    */
   onPullDownRefresh: function () {
-    console.log("下拉动作")
-    wx.getSystemInfo({
-      success(res) {
-        console.log(res)
-      }
-    })
+    let refreshDTO = {
+      startFloor:this.data.startFloor,
+      endFloor:this.data.endFloor,
+      passageId:this.data.articleID
+    }
+    this.refreshComments(refreshDTO)
   },
 
   /**

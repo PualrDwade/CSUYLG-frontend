@@ -21,14 +21,11 @@ const formatNumber = n => {
  * 不大于50个字,不能为空(空字符串)
  */
 const contentValidate = function (content) {
+  content = content.replace(/\s+/g, "");
   if (content.length < 10 || content.length > 50) {
     return false
   }
-  console.log('输入内容长度:',content.length)
-  //使用正则表达式匹配
-  let regu = "^[ ]+$"
-  let re = new RegExp(regu)
-  return !re.test(content)
+  return true
 }
 
 module.exports = {
