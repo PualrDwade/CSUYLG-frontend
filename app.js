@@ -4,9 +4,7 @@ import * as api from 'utils/api.js'
 App({
   // 设置全局数据
   globalData: {
-    baseURL: "http://api.xuanxuan.store",
-    openId: null,
-    sesiionId: null,
+    baseURL: "https://api.xuanxuan.store",
     hasLoginStatus: null
   },
 
@@ -19,7 +17,8 @@ App({
       //获取用户授权状态,如果已授权,则同步授权数据
       wx.getSetting({
         success: res => {
-          if (res.authSetting['scope.userInfo']) {
+          //用户已经拿到了授权,并且本地存储了授权的用户信息
+          if (res.authSetting['scope.userInfo'] && wx.getStorageSync('userInfo')) {
             //已经授权了,可以直接获取用户的详细信息
             console.log('用户已经授权了,不需要再授权')
             var response = {

@@ -1,68 +1,89 @@
 /* pages/commentPage/commentPage.wxss */
-.header{
+
+.header {
   width: 750rpx;
   height: 70rpx;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.header-font{
+
+.header-font {
   margin-left: 10px;
   font-size: 34rpx;
 }
-.commentArea{
+
+.bottom-panel {
+  /* background-color: black; */
+  /* height: 200rpx; */
+  padding: 50rpx;
+  margin-bottom: 200rpx;
+}
+
+.commentArea {
   width: 750rpx;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 }
-.comment{
+
+.comment {
   width: 750rpx;
   background-color: white;
   margin-top: 8rpx;
 }
-.comment2{
+
+.comment2 {
   width: 700rpx;
   margin: 25rpx;
   display: flex;
   flex-direction: row;
-  font-size: 32rpx
+  font-size: 32rpx;
 }
-.floor,.date,.iconArea,.header,.inputUser{
+
+.floor, .date, .iconArea, .header, .inputUser {
   color: #aeaaaa;
   font-size: 28rpx;
 }
-.avatarArea{
+
+.avatarArea {
   width: 105rpx;
 }
-.avatar{
+
+.avatar {
   width: 90rpx;
   height: 90rpx;
   margin-right: 15rpx;
-  border-radius: 100%
+  border-radius: 100%;
 }
-.commentRightArea{
+
+.commentRightArea {
   display: flex;
   flex-direction: column;
   width: 595rpx;
 }
-.userArea{
+
+.userArea {
   height: 60rpx;
   width: 100%;
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.userName,.delete{
+
+.userName, .delete {
   color: #4395dc;
 }
-.delete{
+
+.delete {
   margin-left: 25rpx;
 }
-.commentContentArea{
+
+.commentContentArea {
   width: 100%;
 }
-.dealArea{
-  margin-top:20rpx;
+
+.dealArea {
+  margin-top: 20rpx;
   margin-bottom: 20rpx;
   width: 100%;
   height: 48rpx;
@@ -71,75 +92,92 @@
   justify-content: space-between;
   font-size: 24rpx;
 }
-.date,.delete,.zanNum{
+
+.date, .delete, .zanNum {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.dealRight,.dealLeft{
+
+.dealRight, .dealLeft {
   display: flex;
   flex-direction: row;
 }
-.iconArea{
+
+.iconArea {
   height: 36rpx;
   display: flex;
   flex-direction: row;
-  justify-content:flex-end;
+  justify-content: flex-end;
   font-size: 30rpx;
 }
-.Icon{
+
+.Icon {
   width: 36rpx;
   height: 36rpx;
   margin-left: 15rpx;
 }
-.replyArea{
-  padding-top:5rpx; 
+
+.replyArea {
+  padding-top: 5rpx;
   padding-bottom: 5rpx;
   background-color: #f4f4f4;
   width: 100%;
 }
 
-.reply{
+.reply {
   display: flex;
   flex-direction: row;
   margin-bottom: 5rpx;
 }
-.hide{
- display: -webkit-box;
+
+.hide {
+  display: -webkit-box;
 }
-.show{
- display: block;
+
+.show {
+  display: block;
 }
-.hover{
-  background-color:#cccccc;
+
+.hover {
+  background-color: #ccc;
 }
-.inputArea,.bottomArea{
+
+.inputArea, .bottomArea {
   width: 100%;
 }
-.bottomArea,.button{
+
+.bottomArea, .button {
   display: flex;
   flex-direction: row;
-  justify-content: center
+  justify-content: center;
 }
-.inputTips{
+
+.inputTips {
+  bottom: 0rpx;
+  /* padding-bottom: 0%; */
   position: fixed;
-  font-size: 36rpx;
+  font-size: 35rpx;
   background-color: white;
 }
-.tipsArea{
+
+.tipsArea {
   width: 100%;
   height: 80rpx;
 }
-.inputArea,.tipsArea,.emotionArea,.buttonArea,.textTips{
+
+.inputArea, .tipsArea, .emotionArea, .buttonArea, .textTips {
   display: flex;
   flex-direction: column;
-  justify-content: center
+  justify-content: center;
 }
-.inputUser{
+
+.inputUser {
   margin-left: 30rpx;
 }
-.input,.bottomArea{
+
+.input, .bottomArea {
   display: flex;
   flex-direction: row;
   margin-top: 15rpx;
@@ -147,35 +185,42 @@
   height: 100rpx;
   width: 100%;
 }
-.emotionArea,.buttonArea{
+
+.emotionArea, .buttonArea {
   width: 125rpx;
   height: 100rpx;
 }
-.emotion{
-  height: 65rpx;
-  width: 65rpx;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
+
+.emotion {
+  height: 60rpx;
+  width: 60rpx;
+  margin-left: 50rpx;
+  margin-right: 40rpx;
 }
-.button{
-  width: 100%
+
+.button {
+  width: 100%;
 }
-.textArea{
+
+.textArea {
   width: 690rpx;
-  margin:10rpx 30rpx 10rpx 30rpx;
+  margin: 10rpx 30rpx 10rpx 30rpx;
 }
-.textContain{
+
+.textContain {
   width: 500rpx;
 }
-.textTips{
+
+.textTips {
   width: 100%;
   height: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap
+  white-space: nowrap;
 }
 
 /*  加载更多   */
+
 .weui-loading {
   margin: 0 5px;
   width: 20px;
@@ -187,6 +232,7 @@
   background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgxMDB2MTAwSDB6Ii8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRTlFOUU5IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTMwKSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iIzk4OTY5NyIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgzMCAxMDUuOTggNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjOUI5OTlBIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDYwIDc1Ljk4IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0EzQTFBMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA2NSA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNBQkE5QUEiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoMTIwIDU4LjY2IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0IyQjJCMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgxNTAgNTQuMDIgNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjQkFCOEI5IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDE4MCA1MCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNDMkMwQzEiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTE1MCA0NS45OCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNDQkNCQ0IiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyMCA0MS4zNCA2NSkiLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNEMkQyRDIiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDM1IDY1KSIvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0RBREFEQSIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtNjAgMjQuMDIgNjUpIi8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRTJFMkUyIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC0zMCAtNS45OCA2NSkiLz48L3N2Zz4=) no-repeat;
   background-size: 100%;
 }
+
 .weui-loadmore {
   width: 65%;
   margin: 1.5em auto;
@@ -194,11 +240,12 @@
   font-size: 14px;
   text-align: center;
 }
+
 .weui-loadmore__tips {
   display: inline-block;
   vertical-align: middle;
 }
 
-.focusInputArea{
+.focusInputArea {
   width: 100%;
 }
