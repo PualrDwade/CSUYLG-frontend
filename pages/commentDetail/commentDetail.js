@@ -11,6 +11,7 @@ Page({
   data: {
     comment: {},
     baseUrl: app.globalData.baseURL,
+    openId:wx.getStorageSync('openId'),
     inputArea: {
       inputValue: '',//回复的输入内容
       replyType: 1,//默认对评论进行回复

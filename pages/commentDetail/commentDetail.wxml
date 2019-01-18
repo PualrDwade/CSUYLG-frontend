@@ -88,26 +88,9 @@
       </view>
     </view>
   </view>
-  <!-- <view class='bottomArea'></view> -->
   <!-- 底部的撑开面板 -->
   <view class="bottom-panel"></view>
-  <!-- bottom输入栏 -->
-  <view class='inputTips'>
-    <view class='inputArea'>
-      <view class="input">
-        <!-- 表情 -->
-        <view class='emotionArea'>
-          <image lazy-load="true" class='emotion' src='../../icons/comment.png'></image>
-        </view>
-        <!-- 文本框 -->
-        <view class='textContain'>
-          <input class="textTips" value="{{inputArea.inputValue}}" type="text" placeholder="  在此输入你的评论~" confirm-type="send" maxlength="50" bindconfirm="bindInputConfirm" bindinput="bindKeyInput" />
-        </view>
-        <!-- 发送按钮 -->
-        <view class='buttonArea' bindtap='bindInputConfirm'>
-          <view class='button' data-passageId='{{articleID}}'>发送</view>
-        </view>
-      </view>
-    </view>
+  <view class="inputTips">
+    <commentInput type="{{0}}" placeholder="自定义的placeholder" openid="{{openId}}"></commentInput>
   </view>
 </view>
