@@ -300,6 +300,15 @@ const getCommentDetail = function (commentId) {
 }
 
 /**
+ * 进行回复的api接口 
+ * @param {*} replyDTO 
+ */
+const replyToComment = function (replyDTO) {
+
+}
+
+
+/**
  * 模块导出
  */
 module.exports = {
@@ -309,5 +318,6 @@ module.exports = {
   deleteComment: deleteComment,
   login: login,
   getRefreshComments: getRefreshComments,
-  getCommentDetail: getCommentDetail
+  getCommentDetail: getCommentDetail,
+  replyToComment: replyToComment
 }
