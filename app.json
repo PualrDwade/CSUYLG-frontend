@@ -2,7 +2,8 @@
   "pages": [
     "pages/commentPage/commentPage",
     "pages/index/index",
-    "pages/commentDetail/commentDetail"
+    "pages/commentDetail/commentDetail",
+    "pages/components/commentInput"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -105,6 +105,14 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.bottom-panel {
+  /* background-color: black; */
+  /* height: 200rpx; */
+  padding: 50rpx;
+  margin-bottom: 200rpx;
+}
+
 .replyNum{
   margin-left: 25rpx;
 }

@@ -55,8 +55,7 @@
             </view>
             <view wx:if="{{item.replyNum>4}}" bindtap='showCommentDetail' data-commentid='{{item.id}}' class='username' hover-class='hover'>
               查看全部
-              <text class='userName'>{{item.replyNum}}</text>
-              条回复
+              <text class='userName'>{{item.replyNum}}</text> 条回复
             </view>
           </view>
         </view>

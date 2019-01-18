@@ -40,6 +40,7 @@
       </view>
     </view>
   </view>
+  <!-- 回复专区 -->
   <view class='replyArea'>
     <view class='header'>
       <text class='replyNum' space="nbsp">{{comment.replyNum}} 条回复</text>
@@ -59,8 +60,8 @@
             </view>
             <view class='floor'>{{index+1}}楼</view>
           </view>
-          <!-- 评论内容 -->
-          <view class='commentContentArea' data-commentid='{{comment.commentID}}' data-content='{{comment.content}}' bindtap='clickComment' hover-class='hover' bindlongpress='copy'>
+          <!-- 回复内容 -->
+          <view class='commentContentArea' data-replyid='{{item.id}}' bindtap='clickReply' hover-class='hover' bindlongpress='copy'>
             <!-- 如果是回复的回复,则特别显示回复效果 -->
             <text wx:if="{{item.replyType==2}}">回复</text>
             <text wx:if="{{item.replyType==2}}" class='userName'>{{item.toUname}}:</text>
@@ -69,16 +70,17 @@
           <!-- 点赞评论转发区 -->
           <view class='dealArea'>
             <view class='dealLeft'>
-              <view class='date'>{{comment.createTime}}</view>
-              <view wx:if="{{item.power}}" class='delete' bindtap='deleteComment' data-commentid='{{comment.id}}'>
+              <view class='date'>{{item.createTime}}</view>
+              <view wx:if="{{item.fromUid==openId}}" class='delete' bindtap='deleteReply' data-replyid='{{item.id}}'>
                 删除
               </view>
             </view>
-            <view class='dealRight' data-commentid='{{comment.commentID}}' bindtap='zanDeal'>
+            <!-- 对回复进行点赞 -->
+            <view class='dealRight' data-replyid='{{item.id}}' bindtap='starReply'>
               <view class='iconArea'>
                 <view class='zanNum' wx:if="{{item.zanNum!=0}}">{{item.zanNum}}</view>
-                <image wx:if="{{item.ifZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
-                <image wx:if="{{!item.ifZan}}" src='../../icons/zan.png' class='Icon'></image>
+                <image wx:if="{{item.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
+                <image wx:if="{{!item.isZan}}" src='../../icons/zan.png' class='Icon'></image>
               </view>
             </view>
           </view>
