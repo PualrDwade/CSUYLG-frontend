@@ -1,13 +1,6 @@
-// pages/commentPage/commentPage.js
-const app = getApp()
-//引入api
 import * as api from '../../utils/api.js'
-//引入service层
-import {
-  contentValidate
-} from '../../utils/util.js'
-Page({
 
+Page({
   /**
    * 页面的初始数据和视图层绑定
    */
@@ -51,7 +44,7 @@ Page({
    */
   onLoad: function (options) {
     //得到promise的callback之后设置数据,强行维持同步请求
-    app.globalData.hasLoginStatus.then(() => {
+    getApp().globalData.hasLoginStatus.then(() => {
       //设置(页面级别)sessionId和openId
       this.setData({
         openId: wx.getStorageSync('openId'),
@@ -70,7 +63,7 @@ Page({
     }
     else {
       this.setData({
-        articleID: 'test2',
+        articleID: 'test1',
       })
     }
     //随后发起api请求
@@ -350,5 +343,19 @@ Page({
     }
     //刷新评论
     this.refreshComments(refreshDTO)
+  },
+
+
+  /**
+   * 
+   * @param {绑定的事件} e 
+   */
+
+  showCommentDetail: function (e) {
+    console.log(e)
+    let commentId = e.currentTarget.dataset['commentid']
+    wx.navigateTo({
+      url: '../commentDetail/commentDetail?commentId=' + commentId,
+    });
   }
 })

@@ -91,6 +91,6 @@
   <!-- 底部的撑开面板 -->
   <view class="bottom-panel"></view>
   <view class="inputTips">
-    <commentInput type="{{0}}" placeholder="自定义的placeholder" openid="{{openId}}"></commentInput>
+    <commentInput type="{{type}}" placeholder="在此输入你的回复~" targetId="{{targetId}}" openId="{{openId}}" focus="{{focus}}"></commentInput>
   </view>
 </view>

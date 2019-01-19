@@ -6,6 +6,7 @@ import {
   replyToComment
 } from '../../../utils/api';
 
+import { bussinessTemplate } from '../../../utils/bussinessTemplate';
 import { contentValidate } from '../../../utils/util';
 
 Component({
@@ -16,7 +17,12 @@ Component({
     // 占位符绑定数据,用户可以自定义
     placeholder: {
       type: String,
-      value: ' 请进行输入'
+      value: ' 请进行输入',
+    },
+    //输入框聚焦控制
+    focus:{
+      type:Boolean,
+      value:false
     },
     //评论方式,0表示评论,1表示回复评论,3表示回复回复
     type: {
@@ -24,11 +30,11 @@ Component({
       value: '0'//默认对文章评论
     },
     //评论目标的id
-    targetid: {
+    targetId: {
       type: String,
     },
     //用户的id
-    openid: {
+    openId: {
       type: String
     }
   },
@@ -53,130 +59,130 @@ Component({
       })
     },
 
-    // 发送评论或者回复
+    /**
+     * 点击确认发送,判断内容
+     */
     bindInputConfirm: function () {
       if (this.data.type == 0) {
+        //进行评论
         let commentDTO = {
-          fromUid: this.data.openid,
-          passageId: this.data.targetid,
+          fromUid: this.data.openId,
+          passageId: this.data.targetId,
           content: this.data.inputValue
         }
         console.log('对文章发起评论,dto:', commentDTO)
-        this.addComment(commentDTO)
+        //使用业务模版调用具体的业务
+        bussinessTemplate(this.addComment, commentDTO).then((result) => {
+          if (result.status == 200) {
+            wx.showToast({
+              title: '评论成功',
+              icon: 'success',
+              duration: 1000,
+              complete: () => {
+                //清空输入框
+                this.initData()
+                //触发成功发送事件,其他页面监听事件进行响应
+                this.triggerEvent('sendSucceed', {})
+              }
+            })
+          }
+        }).catch((err) => {
+          console.log('未知错误:', err)
+        });
       }
-      else if (this.data.type == 1) {
-        console.log('对评论发起回复')
-      }
-      else if (this.data.type == 2) {
-        console.log('对回复发起回复')
+      else {
+        //进行回复
+        let replyDTO = {
+          content: this.data.inputValue,
+          fromUid: this.data.openId,
+          replyType: this.data.type,
+          replyId: this.data.targetId
+        }
+        console.log('对评论', replyDTO.replyId, '发起回复,data:', replyDTO)
+        bussinessTemplate(this.addReply, replyDTO).then(res => {
+          if (res.status == 200) {
+            wx.showToast({
+              title: '回复成功',
+              icon: 'success',
+              duration: 1000,
+              complete: () => {
+                //清空输入框
+                this.initData()
+                //触发成功发送事件,其他页面监听事件进行响应
+                this.triggerEvent('sendSucceed', {})
+              }
+            })
+          }
+        }).catch(res => {
+          console.log(res)
+        })
       }
     },
 
     // 键盘键入的事件监听
     bindKeyInput: function (e) {
       console.log('组件进行输入', e)
+      //设置值,绑定输入内容框
       this.setData({
         inputValue: e.detail.value
       })
     },
 
+
     /**
-    * 进行评论
+    * 进行评论的业务方法
+    * 业务方法只需要完成业务级别的验证
+    * 异常只需要用reject将api的响应返回
+    * 减轻了方法的职责
+    * 使用模版方法设计模式减少重复验证代码
     * @param {评论传输对象,对文章进行评论} commentDTO 
     */
     addComment: function (commentDTO) {
-      //进行授权判断        
-      getApp().isAuthStatus().then(res => {
-        if (res.status == 200) {
-          if (!contentValidate(commentDTO.content)) {
-            wx.showToast({
-              title: '评论或回复内容不能为空,长度在10-50字之间哟~',
-              icon: 'none',
-              duration: 2000
-            })
-            return
-          }
-          //进行api请求
-          commentToPassage(commentDTO).then(res => {
-            if (res.status == 200) {
-              wx.showToast({
-                title: '评论成功',
-                icon: 'success',
-                duration: 1000,
-                complete: () => {
-                  //清空输入框
-                  this.initData()
-                  //触发成功发送事件,其他页面监听事件进行响应
-                  this.triggerEvent('sendSucceed', {})
-                }
-              })
-            }
-          }).catch(res => {
-            if (res.status == 401) {
-              wx.showToast({
-                title: '登陆状态失效,请重试',
-                icon: 'none',
-                duration: 1000
-              })
-              //重新登陆
-              api.login().then((result) => {
-                wx.showToast({
-                  title: '已经为您重新登陆~继续浏览吧~',
-                  icon: 'none',
-                  duration: 1000
-                })
-              }).catch((err) => {
-                wx.showToast({
-                  title: '重新登陆失败,请重启小程序',
-                  icon: 'none',
-                  duration: 1000
-                })
-              });
-            } else {
-              wx.showToast({
-                title: '操作失败~请检查网络',
-                icon: 'none',
-                duration: 1000
-              })
-              console.log(res)
-            }
+      return new Promise(function (resolve, reject) {
+        //首先判断回复内容是否合理
+        if (!contentValidate(commentDTO.content)) {
+          wx.showToast({
+            title: '评论或回复内容不能为空,长度在10-50字之间哟~',
+            icon: 'none',
+            duration: 2000
           })
+          return
         }
-      }).catch(res => {
-        if (res.status == 300) {
-          console.log('用户还没有授权,进行授权操作')
-          wx.navigateTo({
-            url: '../index/index'
-          })
-        }
-        else if (res.status == 401) {
-          //重新登陆
-          api.login().then(res => {
-            console.log("sessionId过期,重新登录")
-            wx.showModal({
-              title: '提示',
-              content: '登陆已过期~已经为您重新登陆',
-              cancelText: false
-            }).catch(res => {
-              console.log('重新登录失败')
-            })
-          })
-        }
-        else {
-          console.log(res)
-        }
+        //进行api请求
+        commentToPassage(commentDTO).then(res => {
+          resolve(res)
+        }).catch(res => {
+          reject(res)
+        })
       })
     },
 
 
     /**
-     * 进行回复
-     * @param {回复传输对象,对评论或者回复进行回复} replyDTO 
-     */
+    * 进行回复的业务方法
+    * 业务方法只需要完成业务级别的验证
+    * 异常只需要用reject将api的响应返回
+    * 减轻了方法的职责
+    * 使用模版方法设计模式减少重复验证代码
+    * @param {回复传输对象,对评论或者回复进行回复} replyDTO 
+    */
     addReply: function (replyDTO) {
-      let that = this
       return new Promise(function (resolve, reject) {
-        //发起api请求
+        //首先判断回复内容是否合理
+        if (!contentValidate(replyDTO.content)) {
+          wx.showToast({
+            title: '评论或回复内容不能为空,长度在10-50字之间哟~',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
+        //进行api请求
+        replyToComment(replyDTO).then(res => {
+          resolve(res)
+        }).catch(res => {
+          reject(res)
+        })
       })
     }
   },

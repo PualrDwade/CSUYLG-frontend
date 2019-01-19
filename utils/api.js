@@ -269,6 +269,10 @@ const getCommentDetail = function (commentId) {
     wx.request({
       url: getApp().globalData.baseURL + '/api/comment/' + commentId + '/replys',
       method: 'GET',
+      header: {
+        'content-type': 'application/json',
+        'sessionId': wx.getStorageSync('sessionId')
+      },
       success: res => {
         if (res.data.code == 200) {
           console.log('评论详情api请求成功,返回消息:', res.data)
@@ -304,7 +308,39 @@ const getCommentDetail = function (commentId) {
  * @param {*} replyDTO 
  */
 const replyToComment = function (replyDTO) {
-
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: getApp().globalData.baseURL + '/api/reply',
+      data: JSON.stringify(replyDTO),
+      header: {
+        'content-type': 'application/json',
+        'sessionId': wx.getStorageSync('sessionId')
+      },
+      method: 'POST',
+      success: (result) => {
+        if (result.data.code == 200) {
+          console.log("回复api请求成功")
+          var response = {
+            status: 200
+          }
+          resolve(response)
+        }
+        else if (result.data.code == 401) {
+          var response = {
+            status: 401
+          }
+          reject(response)
+        }
+      },
+      fail: () => {
+        console.log("wx.request发起失败")
+        var response = {
+          status: 300
+        }
+        reject(response)
+      },
+    });
+  })
 }
 
 

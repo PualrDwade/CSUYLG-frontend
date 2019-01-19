@@ -74,6 +74,6 @@
   <view class="bottom-panel"></view>
   <!-- 使用输入组件 -->
   <view class='inputTips'>
-    <commentInput class="inputArea" placeholder="在此输入你的评论~" bind:sendSucceed="bindSendSucceed" openid="{{openId}}" targetid="{{articleID}}"></commentInput>
+    <commentInput class="inputArea" placeholder="在此输入你的评论~" bind:sendSucceed="bindSendSucceed" openId="{{openId}}" targetId="{{articleID}}"></commentInput>
   </view>
 </view>

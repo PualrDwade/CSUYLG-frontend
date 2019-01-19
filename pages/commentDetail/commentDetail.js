@@ -11,16 +11,39 @@ Page({
   data: {
     comment: {},
     baseUrl: app.globalData.baseURL,
-    openId:wx.getStorageSync('openId'),
-    inputArea: {
-      inputValue: '',//回复的输入内容
-      replyType: 1,//默认对评论进行回复
-      replyId: null,//回复目标的id
-      bottomH: 0,
-      line: 0,
-      commentIsNull: true, //判断input的输入框里面是否为空
-    }
+    openId: wx.getStorageSync('openId'),
+    type: 1,
+    focus:false,//底部输入框是否拉起
+    targetId: null
   },
+
+  /**
+  * 生命周期函数--监听页面加载
+  */
+  onLoad: function (options) {
+    //得到页面路由传递的参数
+    let commentId = options.commentId
+    getCommentDetail(commentId).then((result) => {
+      console.log('debug', result)
+      if (result.status == 200) {
+        console.log('data:', result.data)
+        this.setData({
+          comment: result.data,
+          //默认是回复评论
+          targetId: commentId
+        })
+      }
+    }).catch((err) => {
+      if (err.status && err.status == 300) {
+        wx.showToast({
+          title: err.message,
+          icon: 'none',
+          duration: 1000
+        });
+      }
+    });
+  },
+
 
   //进行点赞操作
   startHandle: function (e) {
@@ -37,7 +60,10 @@ Page({
     console.log("点击评论" + e.currentTarget.dataset.commentid)
   },
 
-  //复制
+  /**
+   * 复制操作
+   * 
+   **/
   copy: function (e) {
     console.log("长按")
     console.log(e)
@@ -46,73 +72,16 @@ Page({
   //点击回复
   clickReply: function (e) {
     console.log("点击回复" + e.currentTarget.dataset.replyid)
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    //得到页面路由传递的参数
-    let commentId = options.commentId
-    getCommentDetail(commentId).then((result) => {
-      console.log('debug', result)
-      if (result.status == 200) {
-        console.log('data:', result.data)
-        this.setData({
-          comment: result.data
-        })
-      }
-    }).catch((err) => {
-      if (err.status && err.status == 300) {
-        wx.showToast({
-          title: err.message,
-          icon: 'none',
-          duration: 1000
-        });
-      }
-    });
-    //
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+    //拉起输入框
+    this.setData({
+      focus:true
+    })
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
   },
 
