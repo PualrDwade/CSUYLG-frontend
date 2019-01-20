@@ -146,15 +146,13 @@ Page({
         } else {
           console.log('到底了,没有更多数据了!')
           // 设置动画延时
-          setTimeout(() => {
-            this.setData({
-              isHideLoadMore: false
-            })
-            wx.showToast({
-              title: '评论已经到底了哟~',
-              icon: 'none',
-            })
-          }, 500)
+          this.setData({
+            isHideLoadMore: false
+          })
+          wx.showToast({
+            title: '评论已经到底了哟~',
+            icon: 'none',
+          })
         }
       }
     }).catch(res => {

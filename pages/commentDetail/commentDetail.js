@@ -19,7 +19,7 @@ Page({
   data: {
     comment: {},
     baseUrl: app.globalData.baseURL,
-    openId: wx.getStorageSync('openId'),
+    openId: null,
     type: 1,
     placeholder: ' 在此输入你的回复~',
     focus: false,//底部输入框是否拉起
@@ -43,6 +43,10 @@ Page({
   */
   onLoad: function (options) {
     //得到页面路由传递的参数
+    this.setData({
+      openId: wx.getStorageSync('openId'),
+    })
+    console.log('详情页面加载:openId:', this.data.openId)
     let commentId = options.commentId
     getCommentDetail(commentId).then((result) => {
       console.log('debug', result)
