@@ -134,6 +134,7 @@ export const auth = function (userInfo) {
   })
 }
 
+
 /**
  * 获取文章评论回复数据的api接口
  * @Param:passageId:文章id
@@ -168,6 +169,7 @@ export const getComments = function (passageId, page) {
     })
   })
 }
+
 
 /**
  * 删除回复内容api接口
@@ -205,7 +207,7 @@ export const deleteComment = function (commentId) {
       },
       fail: function (res) {
         console.log("wx.request请求发起失败")
-      },
+      }
     })
   })
 }
@@ -214,12 +216,7 @@ export const deleteComment = function (commentId) {
 /**
  * 文章评论刷新的接口
  * @Param:refreshDTD:
- * refreshDTO:
- * {
- *   startFloor:number,
- *   endFloor:number,
- *   passageId:number
- * }
+ * refreshDTO
  */
 export const getRefreshComments = function (refreshDTO) {
   return new Promise(function (resolve, reject) {
@@ -259,6 +256,7 @@ export const getRefreshComments = function (refreshDTO) {
     })
   })
 }
+
 
 /**
  * 根据评论id得到评论的详情内容
@@ -302,6 +300,7 @@ export const getCommentDetail = function (commentId) {
     })
   })
 }
+
 
 /**
  * 进行回复的api接口 
@@ -357,10 +356,81 @@ export const deleteReply = function (replyId) {
         'sessionId': wx.getStorageSync('sessionId')
       },
       method: 'DELETE',
-      success: (result) => {
-        console.log('删除回复api请求成功')
+      success: function (res) {
+        if (res.data.code == 200) {
+          console.log("删除回复api请求成功")
+          var response = {
+            status: 200
+          }
+          resolve(response)
+        } else if (res.data.code == 401) {
+          //sessionId失效,返回错误信息
+          var response = {
+            status: 401
+          }
+          reject(response)
+        } else {
+          console.log(res.data)
+          var response = {
+            status: 300,
+            message: res.data.message
+          }
+          reject(response)
+        }
       },
-      fail: () => { },
+      fail: function (res) {
+        console.log("wx.request请求发起失败")
+      }
+    })
+  })
+}
+
+
+/**
+ * 对目标进行点赞操作,无法重复点赞
+ * @param {点赞传输对象} starDTO
+ * {
+  "toId": "string",
+  "toType": 0,
+  "userId": "string"
+} 
+ */
+
+export const addStar = function (starDTO) {
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: getApp().globalData.baseURL + '/api/star',
+      data: JSON.stringify(starDTO),
+      header: {
+        'content-type': 'application/json',
+        'sessionId': wx.getStorageSync('sessionId')
+      },
+      method: 'POST',
+      success: (result) => {
+        console.log(result)
+        if (result.data.code == 200) {
+          var response = {
+            status: 200
+          }
+          resolve(response)
+        }
+        else if (result.data.code == 401) {
+          var response = {
+            status: 401
+          }
+          reject(response)
+        }
+        else if (result.data.code == 400) {
+          var response = {
+            status: 300,
+            message: result.data.message
+          }
+          reject(response)
+        }
+      },
+      fail: () => {
+        console.log('wx.request发起失败')
+      }
     })
   })
 }

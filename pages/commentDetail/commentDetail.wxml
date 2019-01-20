@@ -24,11 +24,8 @@
           <view class='dealArea'>
             <view class='dealLeft'>
               <view class='date'>{{comment.createTime}}</view>
-              <view wx:if="{{comment.power}}" class='delete' bindtap='deleteComment' data-commentid='{{comment.id}}'>
-                删除
-              </view>
             </view>
-            <view class='dealRight' data-commentid='{{comment.id}}' bindtap='starHandle'>
+            <view class='dealRight' data-commentid='{{comment.id}}' data-totype="{{1}}" bindtap='starHandle'>
               <view class='iconArea'>
                 <view class='zanNum'>{{comment.zanNum}}</view>
                 <image wx:if="{{comment.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
@@ -43,7 +40,7 @@
   <!-- 回复专区 -->
   <view class='replyArea'>
     <view class='header'>
-      <text class='replyNum' space="nbsp">{{comment.replyNum}} 条回复</text>
+      <text class='replyNum' space="nbsp">{{comment.replyList.length}} 条回复</text>
     </view>
     <!-- 此处开始回复的内容展示 -->
     <view class='reply' wx:key="{{index}}" wx:for="{{comment.replyList}}">
@@ -76,7 +73,7 @@
               </view>
             </view>
             <!-- 对回复进行点赞 -->
-            <view class='dealRight' data-replyid='{{item.id}}' bindtap='starReply'>
+            <view class='dealRight' data-replyid='{{item.id}}' bindtap='starHandle' data-totype="{{2}}">
               <view class='iconArea'>
                 <view class='zanNum' wx:if="{{item.zanNum!=0}}">{{item.zanNum}}</view>
                 <image wx:if="{{item.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>

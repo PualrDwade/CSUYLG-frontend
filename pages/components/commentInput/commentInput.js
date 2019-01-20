@@ -184,17 +184,21 @@ Component({
           reject(res)
         })
       })
+    },
+
+
+    /**
+    * 绑定输入框失去焦点时的动作
+    * @param {时间参数} e 
+    */
+    bindblur: function (e) {
+      //触发事件
+      this.triggerEvent('bindblur', {})
     }
+
   },
 
 
-  /**
-   * 绑定输入框失去焦点时的动作
-   * @param {时间参数} e 
-   */
-  bindblur: function (e) {
-    //触发事件
-    this.triggerEvent('bindblur', {})
-  }
+
 
 })

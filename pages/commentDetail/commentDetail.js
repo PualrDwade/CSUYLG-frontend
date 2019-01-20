@@ -1,7 +1,15 @@
 // pages/commentDetail/commentDetail.js
 const app = getApp()
 
-import { getCommentDetail } from '../../utils/api';
+import {
+  getCommentDetail,
+  deleteReply,
+  login
+} from '../../utils/api';
+
+import {
+  addStarService
+} from '../../service/starService';
 
 Page({
 
@@ -94,6 +102,7 @@ Page({
     })
   },
 
+
   /**
    * 绑定回复发送成功的回调函数
    * @param {事件参数} e 
@@ -112,13 +121,36 @@ Page({
   bindblur: function (e) {
     //重设input数据
     this.resetData()
+    console.log('失去焦点', e)
   },
 
-  //进行点赞操作
-  startHandle: function (e) {
-    console.log("对" + e.currentTarget.dataset.commentid + "进行点赞操作")
+
+  /**
+   * 点赞的事件绑定
+   */
+  starHandle: function (e) {
+    console.log("对" + e.currentTarget.dataset.replyid + "进行点赞操作")
+    //执行点赞业务
+    let starDTO = {
+      toId: e.currentTarget.dataset.replyid,
+      toType: e.currentTarget.dataset.totype,
+      userId: wx.getStorageSync('openId')
+    }
+    //执行点赞服务
+    addStarService(starDTO).then((result) => {
+      //刷新评论详情内容
+      this.refreshComment()
+    }).catch((err) => {
+      console.log('业务发生异常', err)
+    });
   },
 
+
+
+  /**
+   * 
+   * @param {事件参数} e 
+   */
   //点击用户的头像或者用户时使用此函数
   clickUser: function (e) {
     console.log("点击用户" + e.currentTarget.dataset.openid)
@@ -177,10 +209,72 @@ Page({
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
     }).catch((err) => {
+      console.log(err)
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
     })
 
+  },
+
+
+  /**
+   * 删除评论的事件绑定
+   * @param {事件传入参数} e 
+   */
+  deleteReply: function (e) {
+    /**
+   * 点击删除评论的事件处理函数
+   */
+    wx.showModal({
+      title: '提示',
+      content: '确认删除该回复嘛~',
+      success: res => {
+        //判断用户是否点击了确认
+        if (!res.confirm) {
+          return
+        }
+        console.log("删除回复" + e.currentTarget.dataset.replyid)
+        const replyId = e.currentTarget.dataset.replyid
+        deleteReply(replyId).then(res => {
+          if (res.status == 200) {
+            wx.showToast({
+              title: '删除回复成功',
+              icon: 'success',
+              duration: 1000,
+              complete: res => {
+                let newComment = this.data.comment
+                newComment.replyList = this.data.comment.replyList.filter(item => {
+                  return item.id != replyId
+                })
+                console.log('new comment:', newComment)
+                //回调函数,从视图变量中删除回复
+                this.setData({
+                  comment: newComment
+                })
+              }
+            })
+          }
+        }).catch(res => {
+          if (res.status == 300) {
+            wx.showToast({
+              title: '删除回复失败,请检查网络~',
+              icon: 'none',
+              duration: 1000
+            })
+          } else {
+            //重新登陆
+            login().then(res => {
+              console.log("sessionId过期,重新登录")
+              wx.showToast({
+                title: '登陆已过期~已经为您重新登陆',
+                icon: 'none',
+                duration: 1500,
+              })
+            })
+          }
+        })
+      }
+    })
   },
 
 

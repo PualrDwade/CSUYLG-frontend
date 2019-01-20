@@ -1,4 +1,7 @@
 import * as api from '../../utils/api.js'
+import {
+  addStarService
+} from '../../service/starService';
 
 Page({
   /**
@@ -43,18 +46,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //得到promise的callback之后设置数据,强行维持同步请求
-    getApp().globalData.hasLoginStatus.then(() => {
-      //设置(页面级别)sessionId和openId
-      this.setData({
-        openId: wx.getStorageSync('openId'),
-      })
-    }).catch(() => {
-      wx.showToast({
-        title: '登陆状态获取失败',
-        icon: 'none'
-      })
-    })
     //从url中获取文章id
     if (options.articleID) {
       this.setData({
@@ -66,52 +57,34 @@ Page({
         articleID: 'test1',
       })
     }
-    //随后发起api请求
-    api.getComments(this.data.articleID, this.data.page).then(res => {
-      if (res.status == 200) {
-        //判断是否有评论内容,如果没有,则设置默认的初始值
-        this.setData({
-          commentList: res.data.data
+    //得到promise的callback之后设置数据,强行维持同步请求
+    getApp().globalData.hasLoginStatus.then(() => {
+      //设置(页面级别)sessionId和openId
+      this.setData({
+        openId: wx.getStorageSync('openId'),
+      })
+      //随后发起api请求
+      api.getComments(this.data.articleID, this.data.page).then(res => {
+        if (res.status == 200) {
+          //判断是否有评论内容,如果没有,则设置默认的初始值
+          this.setData({
+            commentList: res.data.data
+          })
+          this.refreshFloor()
+        }
+      }).catch(res => {
+        console.log(res)
+        wx.showModal({
+          title: '提示',
+          content: '文章评论获取失败,请检查网络~',
         })
-        this.refreshFloor()
-      }
-    }).catch(res => {
-      console.log(res)
-      wx.showModal({
-        title: '提示',
-        content: '文章评论获取失败,请检查网络~',
+      })
+    }).catch(() => {
+      wx.showToast({
+        title: '登陆状态获取失败',
+        icon: 'none'
       })
     })
-  },
-
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    console.log('页面渲染完成')
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    console.log('用户卸载了页面')
   },
 
 
@@ -199,9 +172,6 @@ Page({
   },
 
 
-
-
-
   /**
    * 刷新文章的评论数据
    * @param {评论刷新数据} refreshDTO 
@@ -235,10 +205,28 @@ Page({
 
 
   /**
-   * 取消点赞的函数
+   * 点赞的事件绑定
    */
   starHandle: function (e) {
     console.log("对" + e.currentTarget.dataset.commentid + "进行点赞操作")
+    //执行点赞业务
+    let starDTO = {
+      toId: e.currentTarget.dataset.commentid,
+      toType: e.currentTarget.dataset.totype,
+      userId: wx.getStorageSync('openId')
+    }
+    //执行点赞服务
+    addStarService(starDTO).then((result) => {
+      let refreshDTO = {
+        startFloor: this.data.startFloor,
+        endFloor: this.data.endFloor,
+        passageId: this.data.articleID
+      }
+      //刷新评论
+      this.refreshComments(refreshDTO)
+    }).catch((err) => {
+      console.log('业务发生', err)
+    });
   },
 
 

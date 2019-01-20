@@ -33,7 +33,7 @@
                 删除
               </view>
             </view>
-            <view class='dealRight' data-commentid='{{item.id}}' bindtap='starHandle'>
+            <view class='dealRight' data-totype='{{1}}' data-commentid='{{item.id}}' bindtap='starHandle'>
               <view class='iconArea'>
                 <view class='zanNum'>{{item.zanNum}}</view>
                 <image lazy-load="true" wx:if="{{item.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
