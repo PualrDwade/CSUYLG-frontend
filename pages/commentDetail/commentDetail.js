@@ -120,7 +120,7 @@ Page({
    */
   bindCancleInput: function (e) {
     //重设input数据
-    this.resetData()
+    // this.resetData()
     console.log('失去焦点', e)
   },
 
