@@ -47,6 +47,7 @@ Component({
     inputValue: '',
   },
 
+
   /**
    * 组件的方法列表
    */
@@ -58,6 +59,7 @@ Component({
         inputValue: '',
       })
     },
+
 
     /**
      * 点击确认发送,判断内容
@@ -119,7 +121,12 @@ Component({
       }
     },
 
-    // 键盘键入的事件监听
+
+
+    /**
+     * 键盘输入的事件监听
+     * @param {键盘输入} e 
+     */
     bindKeyInput: function (e) {
       console.log('组件进行输入', e)
       //设置值,绑定输入内容框
@@ -127,6 +134,7 @@ Component({
         inputValue: e.detail.value
       })
     },
+
 
 
     /**
@@ -158,6 +166,7 @@ Component({
     },
 
 
+
     /**
     * 进行回复的业务方法
     * 业务方法只需要完成业务级别的验证
@@ -187,15 +196,16 @@ Component({
     },
 
 
+
     /**
     * 绑定输入框失去焦点时的动作
     * @param {时间参数} e 
     */
     bindblur: function (e) {
       //触发事件
-      this.triggerEvent('bindblur', {})
+      console.log('哈哈哈哈哈哈哈哈哈哈哈', e)
+      this.triggerEvent('cancleInput', {})
     }
-
   },
 
 

@@ -88,6 +88,6 @@
   <!-- 底部的撑开面板 -->
   <view class="bottom-panel"></view>
   <view class="inputTips">
-    <commentInput bindblur="bindblur" bind:sendSucceed="bindSendSucceed" type="{{type}}" placeholder="{{placeholder}}" targetId="{{targetId}}" openId="{{openId}}" focus="{{focus}}"></commentInput>
+    <commentInput bind:cancleInput="bindCancleInput" bind:sendSucceed="bindSendSucceed" type="{{type}}" placeholder="{{placeholder}}" targetId="{{targetId}}" openId="{{openId}}" focus="{{focus}}"></commentInput>
   </view>
 </view>

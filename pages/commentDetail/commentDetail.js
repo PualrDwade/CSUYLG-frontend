@@ -118,7 +118,7 @@ Page({
    * 重设部分页面的参数值
    * @param {事件参数} e 
    */
-  bindblur: function (e) {
+  bindCancleInput: function (e) {
     //重设input数据
     this.resetData()
     console.log('失去焦点', e)
