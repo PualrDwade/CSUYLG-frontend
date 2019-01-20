@@ -8,7 +8,7 @@
       </view>
       <!-- 文本框 -->
       <view class='textContain'>
-        <input class="textTips" value="{{inputValue}}" type="text" placeholder="{{placeholder}}" confirm-type="send" maxlength="50" bindconfirm="bindInputConfirm" bindinput="bindKeyInput" focus="{{focus}}"/>
+        <input class="textTips" bindblur="bindblur" value="{{inputValue}}" type="text" placeholder="{{placeholder}}" confirm-type="send" maxlength="50" bindconfirm="bindInputConfirm" bindinput="bindKeyInput" focus="{{focus}}" />
       </view>
       <!-- 发送按钮 -->
       <view class='buttonArea' bindtap='bindInputConfirm'>

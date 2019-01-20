@@ -7,7 +7,7 @@
 /**
  * 进行登陆的api接口,获取sessionId与openId存入本地
  */
-const login = function () {
+export const login = function () {
   return new Promise(function (resolve, reject) {
     console.log("得到了app")
     wx.login({
@@ -56,7 +56,7 @@ const login = function () {
 /**
  * 进行文章评论的api接口
  */
-const commentToPassage = function (commentDTO) {
+export const commentToPassage = function (commentDTO) {
   return new Promise(function (resolve, reject) {
     commentDTO.fromUid = wx.getStorageSync('openId')
     //使用promise封装请求
@@ -96,7 +96,7 @@ const commentToPassage = function (commentDTO) {
 /**
  * 进行后端auth同步的api接口
  */
-const auth = function (userInfo) {
+export const auth = function (userInfo) {
   return new Promise(function (resolve, reject) {
     // 添加openId字段
     userInfo.id = wx.getStorageSync('openId')
@@ -139,7 +139,7 @@ const auth = function (userInfo) {
  * @Param:passageId:文章id
  * @Param:page:分页的页数
  */
-const getComments = function (passageId, page) {
+export const getComments = function (passageId, page) {
   return new Promise(function (resolve, reject) {
     wx.request({
       url: getApp().globalData.baseURL + '/api/passage/' + passageId + '/comments?page=' + page,
@@ -172,7 +172,7 @@ const getComments = function (passageId, page) {
 /**
  * 删除回复内容api接口
  */
-const deleteComment = function (commentId) {
+export const deleteComment = function (commentId) {
   return new Promise(function (resolve, reject) {
     wx.request({
       url: getApp().globalData.baseURL + '/api/comment/' + commentId,
@@ -221,7 +221,7 @@ const deleteComment = function (commentId) {
  *   passageId:number
  * }
  */
-const getRefreshComments = function (refreshDTO) {
+export const getRefreshComments = function (refreshDTO) {
   return new Promise(function (resolve, reject) {
     console.log(refreshDTO)
     wx.request({
@@ -264,7 +264,7 @@ const getRefreshComments = function (refreshDTO) {
  * 根据评论id得到评论的详情内容
  * @param {评论的id} commentId 
  */
-const getCommentDetail = function (commentId) {
+export const getCommentDetail = function (commentId) {
   return new Promise(function (resolve, reject) {
     wx.request({
       url: getApp().globalData.baseURL + '/api/comment/' + commentId + '/replys',
@@ -307,7 +307,7 @@ const getCommentDetail = function (commentId) {
  * 进行回复的api接口 
  * @param {*} replyDTO 
  */
-const replyToComment = function (replyDTO) {
+export const replyToComment = function (replyDTO) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: getApp().globalData.baseURL + '/api/reply',
@@ -345,15 +345,22 @@ const replyToComment = function (replyDTO) {
 
 
 /**
- * 模块导出
+ * 删除回复内容
+ * @param {回复id} replyId 
  */
-module.exports = {
-  getComments: getComments,
-  commentToPassage: commentToPassage,
-  auth: auth,
-  deleteComment: deleteComment,
-  login: login,
-  getRefreshComments: getRefreshComments,
-  getCommentDetail: getCommentDetail,
-  replyToComment: replyToComment
+export const deleteReply = function (replyId) {
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: getApp().globalData.baseURL + '/api/reply/' + replyId,
+      header: {
+        'content-type': 'application/json',
+        'sessionId': wx.getStorageSync('sessionId')
+      },
+      method: 'DELETE',
+      success: (result) => {
+        console.log('删除回复api请求成功')
+      },
+      fail: () => { },
+    })
+  })
 }

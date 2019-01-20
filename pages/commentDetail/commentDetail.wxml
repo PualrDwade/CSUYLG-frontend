@@ -61,7 +61,7 @@
             <view class='floor'>{{index+1}}楼</view>
           </view>
           <!-- 回复内容 -->
-          <view class='commentContentArea' data-replyid='{{item.id}}' bindtap='clickReply' hover-class='hover' bindlongpress='copy'>
+          <view class='commentContentArea' data-fromuname='{{item.fromUname}}' data-replyid='{{item.id}}' bindtap='clickReply' hover-class='hover' bindlongpress='copy'>
             <!-- 如果是回复的回复,则特别显示回复效果 -->
             <text wx:if="{{item.replyType==2}}">回复</text>
             <text wx:if="{{item.replyType==2}}" class='userName'>{{item.toUname}}:</text>
@@ -91,6 +91,6 @@
   <!-- 底部的撑开面板 -->
   <view class="bottom-panel"></view>
   <view class="inputTips">
-    <commentInput type="{{type}}" placeholder="在此输入你的回复~" targetId="{{targetId}}" openId="{{openId}}" focus="{{focus}}"></commentInput>
+    <commentInput bindblur="bindblur" bind:sendSucceed="bindSendSucceed" type="{{type}}" placeholder="{{placeholder}}" targetId="{{targetId}}" openId="{{openId}}" focus="{{focus}}"></commentInput>
   </view>
 </view>

@@ -17,12 +17,12 @@ Component({
     // 占位符绑定数据,用户可以自定义
     placeholder: {
       type: String,
-      value: ' 请进行输入',
+      value: ' 在此输入你的回复~',
     },
     //输入框聚焦控制
-    focus:{
-      type:Boolean,
-      value:false
+    focus: {
+      type: Boolean,
+      value: false
     },
     //评论方式,0表示评论,1表示回复评论,3表示回复回复
     type: {
@@ -186,5 +186,15 @@ Component({
       })
     }
   },
+
+
+  /**
+   * 绑定输入框失去焦点时的动作
+   * @param {时间参数} e 
+   */
+  bindblur: function (e) {
+    //触发事件
+    this.triggerEvent('bindblur', {})
+  }
 
 })

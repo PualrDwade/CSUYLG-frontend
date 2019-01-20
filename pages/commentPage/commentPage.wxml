@@ -46,14 +46,15 @@
           <view wx:if="{{item.replyList.length!=0}}" class='replyArea' data-commentid='{{item.id}}' bind:tap="showCommentDetail">
             <!-- 一条回复 -->
             <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2' bindlongpress='copy'>
-              <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}">
+              <view wx:if="{{rindex<3}}">
+                <!-- <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}"> -->
                 <text class='userName'>{{i.fromUname}}</text>
                 <text decode="{{true}}" space="{{true}}" wx:if="{{i.replyType==2}}">回复</text>
                 <text class='userName' wx:if="{{i.replyType==2}}">{{i.toUname}}</text>
                 <text decode="{{true}}" space="{{true}}">&nbsp;:&nbsp;{{i.content}}</text>
               </view>
             </view>
-            <view wx:if="{{item.replyNum>4}}" bindtap='showCommentDetail' data-commentid='{{item.id}}' class='username' hover-class='hover'>
+            <view wx:if="{{item.replyNum>=3}}" data-commentid='{{item.id}}' class='username' hover-class='hover'>
               查看全部
               <text class='userName'>{{item.replyNum}}</text>
               条回复

@@ -141,6 +141,8 @@ Page({
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
     }).catch(res => {
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
       console.log(res)
     })
   },
