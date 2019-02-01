@@ -252,8 +252,12 @@ Page({
   },
 
 
+
+
   /**
-   * 点击删除评论的事件处理函数
+   * @author PualrDwade
+   * @param {事件参数} e 
+   * @description 点击删除评论的事件处理
    */
   deleteComment: function (e) {
     wx.showModal({
