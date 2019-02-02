@@ -13,7 +13,7 @@ Page({
   },
 
   //按钮绑定的事件
-  bindGetUserInfo: function(e) {
+  bindGetUserInfo: function (e) {
     if (e.detail.userInfo) {
       //使用openID进行用户信息的修改
       console.log('点击了确认授权按钮,返回数据:', e)
@@ -22,7 +22,7 @@ Page({
       wx.setStorageSync('userInfo', e.detail.userInfo)
       //同时发起后端api的数据同步请求
       auth(e.detail.userInfo).then(res => {
-        if(res.status == 200){
+        if (res.status == 200) {
           console.log('auth api请求成功~数据同步成功!')
         }
       }).catch(res => {
@@ -35,7 +35,7 @@ Page({
   },
 
   // 页面初始化加载
-  onLoad: function() {
+  onLoad: function () {
     if (wx.getStorageSync('userInfo')) {
       this.setData({
         userInfo: wx.getStorageSync('userInfo'),

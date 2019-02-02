@@ -6,8 +6,12 @@ import {
   replyToComment
 } from '../../../utils/api';
 
-import { bussinessTemplate } from '../../../utils/bussinessTemplate';
-import { contentValidate } from '../../../utils/util';
+import {
+  bussinessTemplate
+} from '../../../utils/bussinessTemplate';
+import {
+  contentValidate
+} from '../../../utils/util';
 
 Component({
   /**
@@ -27,7 +31,7 @@ Component({
     //评论方式,0表示评论,1表示回复评论,3表示回复回复
     type: {
       type: Number,
-      value: '0'//默认对文章评论
+      value: '0' //默认对文章评论
     },
     //评论目标的id
     targetId: {
@@ -91,8 +95,7 @@ Component({
         }).catch((err) => {
           console.log('未知错误:', err)
         });
-      }
-      else {
+      } else {
         //进行回复
         let replyDTO = {
           content: this.data.inputValue,
@@ -138,13 +141,13 @@ Component({
 
 
     /**
-    * 进行评论的业务方法
-    * 业务方法只需要完成业务级别的验证
-    * 异常只需要用reject将api的响应返回
-    * 减轻了方法的职责
-    * 使用模版方法设计模式减少重复验证代码
-    * @param {评论传输对象,对文章进行评论} commentDTO 
-    */
+     * 进行评论的业务方法
+     * 业务方法只需要完成业务级别的验证
+     * 异常只需要用reject将api的响应返回
+     * 减轻了方法的职责
+     * 使用模版方法设计模式减少重复验证代码
+     * @param {评论传输对象,对文章进行评论} commentDTO 
+     */
     addComment: function (commentDTO) {
       return new Promise(function (resolve, reject) {
         //首先判断回复内容是否合理
@@ -168,13 +171,13 @@ Component({
 
 
     /**
-    * 进行回复的业务方法
-    * 业务方法只需要完成业务级别的验证
-    * 异常只需要用reject将api的响应返回
-    * 减轻了方法的职责
-    * 使用模版方法设计模式减少重复验证代码
-    * @param {回复传输对象,对评论或者回复进行回复} replyDTO 
-    */
+     * 进行回复的业务方法
+     * 业务方法只需要完成业务级别的验证
+     * 异常只需要用reject将api的响应返回
+     * 减轻了方法的职责
+     * 使用模版方法设计模式减少重复验证代码
+     * @param {回复传输对象,对评论或者回复进行回复} replyDTO 
+     */
     addReply: function (replyDTO) {
       return new Promise(function (resolve, reject) {
         //首先判断回复内容是否合理
@@ -198,9 +201,9 @@ Component({
 
 
     /**
-    * 绑定输入框失去焦点时的动作
-    * @param {时间参数} e 
-    */
+     * 绑定输入框失去焦点时的动作
+     * @param {时间参数} e 
+     */
     bindblur: function (e) {
       //触发事件
       console.log('哈哈哈哈哈哈哈哈哈哈哈', e)

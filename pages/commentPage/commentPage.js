@@ -31,8 +31,7 @@ Page({
         startFloor: comments[comments.length - 1].floor,
         endFloor: comments[0].floor
       })
-    }
-    else {
+    } else {
       this.setData({
         //设置起始楼层和结束楼层
         startFloor: 0,
@@ -51,8 +50,7 @@ Page({
       this.setData({
         articleID: options.articleID,
       })
-    }
-    else {
+    } else {
       this.setData({
         articleID: 'test1',
       })
