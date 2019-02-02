@@ -1,4 +1,6 @@
-import { login } from './api';
+import {
+  login
+} from './api';
 
 /**
  * 使用模版方法设计模式减少业务代码量
@@ -58,8 +60,7 @@ export const bussinessTemplate = function (functionalAPI, data) {
         wx.navigateTo({
           url: '../index/index'
         })
-      }
-      else if (res.status == 401) {
+      } else if (res.status == 401) {
         //重新登陆
         login().then(res => {
           console.log("sessionId过期,重新登录")
@@ -69,8 +70,7 @@ export const bussinessTemplate = function (functionalAPI, data) {
             duration: 1500,
           })
         })
-      }
-      else {
+      } else {
         //发生了未知的异常
         console.log(res)
       }

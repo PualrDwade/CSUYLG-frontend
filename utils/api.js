@@ -28,7 +28,8 @@ export const login = function () {
               )
               //构造返回值
               var response = {
-                status: 200,
+                status: 200
+                ,
               }
               resolve(response)
             } else {

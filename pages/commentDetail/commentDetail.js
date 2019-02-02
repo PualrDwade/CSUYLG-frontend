@@ -22,7 +22,7 @@ Page({
     openId: null,
     type: 1,
     placeholder: ' 在此输入你的回复~',
-    focus: false,//底部输入框是否拉起
+    focus: false, //底部输入框是否拉起
     targetId: null
   },
 
@@ -39,8 +39,8 @@ Page({
   },
 
   /**
-  * 生命周期函数--监听页面加载
-  */
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function (options) {
     //得到页面路由传递的参数
     this.setData({
@@ -227,8 +227,8 @@ Page({
    */
   deleteReply: function (e) {
     /**
-   * 点击删除评论的事件处理函数
-   */
+     * 点击删除评论的事件处理函数
+     */
     wx.showModal({
       title: '提示',
       content: '确认删除该回复嘛~',
