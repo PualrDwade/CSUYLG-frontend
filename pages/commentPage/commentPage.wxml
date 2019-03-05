@@ -22,8 +22,7 @@
             <view class='floor'>{{item.floor}}楼</view>
           </view>
           <!-- 评论内容 -->
-          <view class='commentContentArea' data-commentid='{{item.id}}' data-content='{{item.content}}' data-type='1'
-            data-username='{{item.username}}' bindtap='showCommentDetail' hover-class='hover' bindlongpress='copy'>
+          <view class='commentContentArea' data-commentid='{{item.id}}' data-content='{{item.content}}' data-type='1' data-username='{{item.username}}' bindtap='showCommentDetail' hover-class='hover' bindlongpress='copy'>
             <text>{{item.content}}</text>
           </view>
           <!-- 操作区 -->
@@ -46,8 +45,7 @@
           <!-- 修改,点击回复,弹出输入框进行输入 -->
           <view wx:if="{{item.replyList.length!=0}}" class='replyArea' data-commentid='{{item.id}}' bind:tap="showCommentDetail">
             <!-- 一条回复 -->
-            <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}"
-              hover-class='hover' data-content='{{i.content}}' data-type='2' bindlongpress='copy'>
+            <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2' bindlongpress='copy'>
               <view wx:if="{{rindex<3}}">
                 <!-- <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}"> -->
                 <text class='userName'>{{i.fromUname}}</text>
@@ -77,7 +75,6 @@
   <view class="bottom-panel"></view>
   <!-- 使用输入组件 -->
   <view class='inputTips'>
-    <commentInput class="inputArea" placeholder="在此输入你的评论~" bind:sendSucceed="bindSendSucceed" openId="{{openId}}"
-      targetId="{{articleID}}"></commentInput>
+    <commentInput class="inputArea" placeholder="在此输入你的评论~" bind:sendSucceed="bindSendSucceed" openId="{{openId}}" targetId="{{articleID}}"></commentInput>
   </view>
 </view>
