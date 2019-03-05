@@ -14,11 +14,6 @@ export const addStarService = function (starDTO) {
         addStar(starDTO).then((result) => {
             console.log('点赞业务方法service方法调用成功')
             if (result.status == 200) {
-                wx.showToast({
-                    title: '点赞成功~',
-                    icon: 'none',
-                    duration: 1500
-                });
                 resolve(result)
             }
         }).catch((err) => {

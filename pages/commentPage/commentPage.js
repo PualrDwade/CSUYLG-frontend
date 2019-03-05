@@ -217,7 +217,7 @@ Page({
       //刷新评论
       this.refreshComments(refreshDTO)
     }).catch((err) => {
-      console.log('业务发生', err)
+      console.log('业务失败:', err)
     });
   },
 
