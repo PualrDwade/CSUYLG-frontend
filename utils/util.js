@@ -5,7 +5,6 @@ const formatTime = date => {
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()
-
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
@@ -28,7 +27,21 @@ const contentValidate = function (content) {
   return true
 }
 
+/**
+ * 根据id修改点赞状态
+ * list可以是评论list,也可以说是回复list
+ */
+const changeStarState = function (id,list){
+  for(item in list){
+    if(item.id == id && item.isZan == false){
+      item.isZan = true
+      break
+    }
+  }
+}
+
 module.exports = {
+  changeStarState:changeStarState,
   formatTime: formatTime,
   contentValidate: contentValidate
 }

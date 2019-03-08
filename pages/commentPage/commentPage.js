@@ -1,4 +1,5 @@
-import * as api from '../../utils/api.js'
+import * as api from '../../utils/api'
+import changeStarState from '../../utils/util';
 import {
   addStarService
 } from '../../service/starService';
@@ -209,13 +210,14 @@ Page({
     }
     //执行点赞服务
     addStarService(starDTO).then((result) => {
-      let refreshDTO = {
-        startFloor: this.data.startFloor,
-        endFloor: this.data.endFloor,
-        passageId: this.data.articleID
-      }
-      //刷新评论
-      this.refreshComments(refreshDTO)
+      //改变图标状态
+      changeStarState(starDTO.toId, this.data.commentList)
+      // let refreshDTO = {
+      //   startFloor: this.data.startFloor,
+      //   endFloor: this.data.endFloor,
+      //   passageId: this.data.articleID
+      // }
+      // this.refreshComments(refreshDTO)
     }).catch((err) => {
       console.log('业务失败:', err)
     });

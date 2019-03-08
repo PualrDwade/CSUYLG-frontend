@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "pages": [ 
     "pages/commentPage/commentPage",
     "pages/index/index",
     "pages/commentDetail/commentDetail"
