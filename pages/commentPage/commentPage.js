@@ -1,5 +1,5 @@
 import * as api from '../../utils/api'
-import changeStarState from '../../utils/util';
+import * as util from '../../utils/util';
 import {
   addStarService
 } from '../../service/starService';
@@ -208,19 +208,20 @@ Page({
       toType: e.currentTarget.dataset.totype,
       userId: wx.getStorageSync('openId')
     }
+    //改变图标状态
+    let newCommentList = util.changeStarState(starDTO.toId, this.data.commentList)
+    this.setData({
+      commentList: newCommentList
+    })
     //执行点赞服务
-    addStarService(starDTO).then((result) => {
-      //改变图标状态
-      changeStarState(starDTO.toId, this.data.commentList)
-      // let refreshDTO = {
-      //   startFloor: this.data.startFloor,
-      //   endFloor: this.data.endFloor,
-      //   passageId: this.data.articleID
-      // }
-      // this.refreshComments(refreshDTO)
-    }).catch((err) => {
-      console.log('业务失败:', err)
-    });
+    addStarService(starDTO).catch(err => {
+      wx.showToast({
+        title: '点赞失败~请检查网络',
+        icon: 'none',
+        duration: 1000,
+        mask: false,
+      });
+    })
   },
 
 
