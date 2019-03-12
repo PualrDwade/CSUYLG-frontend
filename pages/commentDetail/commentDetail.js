@@ -1,4 +1,6 @@
 // pages/commentDetail/commentDetail.js
+import * as util from '../../utils/util';
+
 const app = getApp()
 
 import {
@@ -140,13 +142,21 @@ Page({
       toType: e.currentTarget.dataset.totype,
       userId: wx.getStorageSync('openId')
     }
+    //刷新图标
+    this.data.comment.replyList = util.changeStarState(starDTO.toId, this.data.comment.replyList)
+    let newComment = this.data.comment
+    this.setData({
+      comment:newComment
+    })
     //执行点赞服务
-    addStarService(starDTO).then((result) => {
-      //刷新评论详情内容
-      this.refreshComment()
-    }).catch((err) => {
-      console.log('业务发生异常', err)
-    });
+    addStarService(starDTO).catch(err => {
+      wx.showToast({
+        title: '点赞失败~请检查网络',
+        icon: 'none',
+        duration: 1000,
+        mask: false,
+      });
+    })
   },
 
 

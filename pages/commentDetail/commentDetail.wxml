@@ -75,7 +75,7 @@
               </view>
             </view>
             <!-- 对回复进行点赞 -->
-            <view class='dealRight' data-replyid='{{item.id}}' bindtap='starHandle' data-totype="{{2}}">
+            <view class='dealRight extend' data-replyid='{{item.id}}' bindtap='starHandle' data-totype="{{2}}">
               <view class='iconArea'>
                 <view class='zanNum' wx:if="{{item.zanNum!=0}}">{{item.zanNum}}</view>
                 <image wx:if="{{item.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
