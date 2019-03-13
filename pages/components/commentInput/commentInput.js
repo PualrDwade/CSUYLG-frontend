@@ -205,11 +205,6 @@ Component({
      * @param {时间参数} e 
      */
     bindblur: function (e) {
-      //触发事件
-      console.log('哈哈哈哈哈哈哈哈哈哈哈', e)
-      this.setData({
-        inputValue: ''
-      })
       this.triggerEvent('cancleInput', {})
     }
   },

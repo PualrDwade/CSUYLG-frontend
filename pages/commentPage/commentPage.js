@@ -56,7 +56,7 @@ Page({
         articleID: 'test1',
       })
     }
-    //得到promise的callback之后设置数据,强行维持同步请求
+    //得到promise的callback之后设置数据,维持同步请求
     getApp().globalData.hasLoginStatus.then(() => {
       //设置(页面级别)sessionId和openId
       this.setData({

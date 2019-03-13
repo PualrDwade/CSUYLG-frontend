@@ -26,7 +26,7 @@
             <view class='dealLeft'>
               <view class='date'>{{comment.createTime}}</view>
             </view>
-            <view class='dealRight' data-commentid='{{comment.id}}' data-totype="{{1}}" bindtap='starHandle'>
+            <view class='dealRight' data-replyid='{{comment.id}}' data-commentid='{{comment.id}}' data-totype="{{1}}" bindtap='starHandle'>
               <view class='iconArea'>
                 <view class='zanNum'>{{comment.zanNum}}</view>
                 <image wx:if="{{comment.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
@@ -60,7 +60,7 @@
           </view>
           <!-- 回复内容 -->
           <view class='commentContentArea' data-fromuname='{{item.fromUname}}' data-replyid='{{item.id}}' bindtap='clickReply'
-            hover-class='hover' bindlongpress='copy'>
+            hover-class='hover'>
             <!-- 如果是回复的回复,则特别显示回复效果 -->
             <text wx:if="{{item.replyType==2}}">回复</text>
             <text wx:if="{{item.replyType==2}}" class='userName'>{{item.toUname}}:</text>
