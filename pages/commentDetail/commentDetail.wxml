@@ -17,9 +17,8 @@
             <view class='floor'>{{comment.floor}}楼</view>
           </view>
           <!-- 评论内容 -->
-          <view class='commentContentArea' data-commentid='{{comment.id}}' data-content='{{comment.content}}' bindtap='clickComment'
-            hover-class='hover' bindlongpress='copy'>
-            <text>{{comment.content}}</text>
+          <view class='commentContentArea' data-commentid='{{comment.id}}' data-content='{{comment.content}}' bindtap='clickComment' hover-class='hover' bindlongpress='copy'>
+            <text style="word-break: break-all;">{{comment.content}}</text>
           </view>
           <!-- 点赞评论转发区 -->
           <view class='dealArea'>
@@ -59,12 +58,11 @@
             <view class='floor'>{{index+1}}楼</view>
           </view>
           <!-- 回复内容 -->
-          <view class='commentContentArea' data-fromuname='{{item.fromUname}}' data-replyid='{{item.id}}' bindtap='clickReply'
-            hover-class='hover'>
+          <view class='commentContentArea' data-fromuname='{{item.fromUname}}' data-replyid='{{item.id}}' bindtap='clickReply' hover-class='hover'>
             <!-- 如果是回复的回复,则特别显示回复效果 -->
             <text wx:if="{{item.replyType==2}}">回复</text>
             <text wx:if="{{item.replyType==2}}" class='userName'>{{item.toUname}}:</text>
-            <text>{{item.content}}</text>
+            <text style="word-break: break-all;">{{item.content}}</text>
           </view>
           <!-- 点赞评论转发区 -->
           <view class='dealArea'>
@@ -90,7 +88,6 @@
   <!-- 底部的撑开面板 -->
   <view class="bottom-panel"></view>
   <view class="inputTips">
-    <commentInput bind:cancleInput="bindCancleInput" bind:sendSucceed="bindSendSucceed" type="{{type}}" placeholder="{{placeholder}}"
-      targetId="{{targetId}}" openId="{{openId}}" focus="{{focus}}"></commentInput>
+    <commentInput bind:cancleInput="bindCancleInput" bind:sendSucceed="bindSendSucceed" type="{{type}}" placeholder="{{placeholder}}" targetId="{{targetId}}" openId="{{openId}}" focus="{{focus}}"></commentInput>
   </view>
 </view>

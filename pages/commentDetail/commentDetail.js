@@ -126,7 +126,7 @@ Page({
    */
   bindCancleInput: function (e) {
     //重设input数据
-    // this.resetData()
+    this.resetData()
     console.log('失去焦点', e)
   },
 
@@ -146,7 +146,7 @@ Page({
     this.data.comment.replyList = util.changeStarState(starDTO.toId, this.data.comment.replyList)
     let newComment = this.data.comment
     this.setData({
-      comment:newComment
+      comment: newComment
     })
     //执行点赞服务
     addStarService(starDTO).catch(err => {
