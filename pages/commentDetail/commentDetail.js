@@ -127,7 +127,6 @@ Page({
   bindCancleInput: function (e) {
     //重设input数据
     this.resetData()
-    console.log('失去焦点', e)
   },
 
 
@@ -135,7 +134,6 @@ Page({
    * 点赞的事件绑定
    */
   starHandle: function (e) {
-    console.log("对" + e.currentTarget.dataset.replyid + "进行点赞操作")
     //执行点赞业务
     let starDTO = {
       toId: e.currentTarget.dataset.replyid,

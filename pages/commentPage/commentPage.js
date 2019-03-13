@@ -9,7 +9,6 @@ Page({
    * 页面的初始数据和视图层绑定
    */
   data: {
-    // commentService:new commentService(),
     commentList: [],
     startFloor: null, //当前数据加载的起始楼层
     endFloor: null, //当前数据加载的结束楼层

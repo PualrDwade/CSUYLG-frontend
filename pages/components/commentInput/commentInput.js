@@ -131,7 +131,6 @@ Component({
      * @param {键盘输入} e 
      */
     bindKeyInput: function (e) {
-      console.log('组件进行输入', e)
       //设置值,绑定输入内容框
       this.setData({
         inputValue: e.detail.value
