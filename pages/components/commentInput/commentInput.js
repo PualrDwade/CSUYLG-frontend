@@ -153,7 +153,7 @@ Component({
         //首先判断回复内容是否合理
         if (!contentValidate(commentDTO.content)) {
           wx.showToast({
-            title: '评论或回复内容不能为空,长度在10-50字之间哟~',
+            title: '评论或回复内容不能为空,长度在10-30字之间哟~',
             icon: 'none',
             duration: 2000
           })
@@ -183,7 +183,7 @@ Component({
         //首先判断回复内容是否合理
         if (!contentValidate(replyDTO.content)) {
           wx.showToast({
-            title: '评论或回复内容不能为空,长度在10-50字之间哟~',
+            title: '评论或回复内容不能为空,长度在10-30字之间哟~',
             icon: 'none',
             duration: 2000
           })
