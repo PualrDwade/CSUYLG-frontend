@@ -45,7 +45,7 @@
           <!-- 修改,点击回复,弹出输入框进行输入 -->
           <view wx:if="{{item.replyList.length!=0}}" class='replyArea' data-commentid='{{item.id}}' bind:tap="showCommentDetail">
             <!-- 一条回复 -->
-            <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2' bindlongpress='copy'>
+            <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2'>
               <view wx:if="{{rindex<3}}">
                 <!-- <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}"> -->
                 <text style="word-break: break-all;">

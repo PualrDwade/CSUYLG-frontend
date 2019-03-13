@@ -25,13 +25,6 @@
             <view class='dealLeft'>
               <view class='date'>{{comment.createTime}}</view>
             </view>
-            <view class='dealRight' data-replyid='{{comment.id}}' data-commentid='{{comment.id}}' data-totype="{{1}}" bindtap='starHandle'>
-              <view class='iconArea'>
-                <view class='zanNum'>{{comment.zanNum}}</view>
-                <image wx:if="{{comment.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
-                <image wx:if="{{!comment.isZan}}" src='../../icons/zan.png' class='Icon'></image>
-              </view>
-            </view>
           </view>
         </view>
       </view>
