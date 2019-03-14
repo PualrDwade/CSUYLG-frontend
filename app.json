@@ -1,5 +1,5 @@
 {
-  "pages": [ 
+  "pages": [
     "pages/commentPage/commentPage",
     "pages/index/index",
     "pages/commentDetail/commentDetail"
@@ -9,5 +9,26 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "云麓谷简评",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#13b2ae",
+    "backgroundColor": "#fff",
+    "position": "bottom",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/commentPage/commentPage",
+        "text": "首页",
+        "iconPath": "icons/home.svg",
+        "selectedIconPath": "icon/home_selected.svg"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "个人中心",
+        "iconPath": "",
+        "selectedIconPath": ""
+      }
+    ]
   }
 }
