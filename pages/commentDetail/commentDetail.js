@@ -44,16 +44,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showToast({
+      title: '加载评论回复中....',
+      icon: 'loading',
+      mask: true,
+    })
     //得到页面路由传递的参数
     this.setData({
       openId: wx.getStorageSync('openId'),
     })
-    console.log('详情页面加载:openId:', this.data.openId)
     let commentId = options.commentId
     getCommentDetail(commentId).then((result) => {
-      console.log('debug', result)
       if (result.status == 200) {
-        console.log('data:', result.data)
+        wx.hideToast()
         this.setData({
           comment: result.data,
           //默认是回复评论
@@ -61,6 +64,7 @@ Page({
         })
       }
     }).catch((err) => {
+      wx.hideToast()
       if (err.status && err.status == 300) {
         wx.showToast({
           title: err.message,
@@ -230,6 +234,7 @@ Page({
 
 
   /**
+   * @author PualrDwade
    * 删除评论的事件绑定
    * @param  e 
    */
@@ -246,56 +251,46 @@ Page({
           return
         }
         const replyId = e.currentTarget.dataset.replyid
-        //无刷新修改
-        // 查找待删除的所有回复
-        let deleteList = util.findReplystoDelete(replyId, this.data.comment.replyList)
-        console.log("deleteList", deleteList)
-        let newComment = this.data.comment
-        newComment.replyList = newComment.replyList.filter(item => {
-          return deleteList.indexOf(item.id) == -1
-        })
-        console.log('new comment:', newComment)
-        //回调函数,从视图变量中删除回复,更新评论
-        this.setData({
-          comment: newComment
-        })
-
-        deleteReply(replyId)
-          // .then(res => {
-          //   if (res.status == 200) {
-          //     wx.showToast({
-          //       title: '删除回复成功',
-          //       icon: 'success',
-          //       duration: 1000,
-          //       complete: res => {
-          //         let newComment = this.data.comment
-          //         newComment.replyList = this.data.comment.replyList.filter(item => {
-          //           return item.id != replyId
-          //         })
-
-          //       }
-          //     })
-          //   }
-          // })
-          .catch(res => {
-            if (res.status == 300) {
-              wx.showToast({
-                title: '删除回复失败,请检查网络~',
-                icon: 'none',
-                duration: 1000
-              })
-            } else {
-              //重新登陆
-              login().then(res => {
-                console.log("sessionId过期,重新登录")
-                wx.showToast({
-                  title: '登陆已过期~已经为您重新登陆',
-                  icon: 'none',
-                  duration: 1500,
+        deleteReply(replyId).then(res => {
+          if (res.status == 200) {
+            wx.showToast({
+              title: '删除回复成功',
+              icon: 'success',
+              duration: 1000,
+              complete: res => {
+                //无刷新修改,查找待删除的所有回复
+                let deleteList = util.findReplystoDelete(replyId, this.data.comment.replyList)
+                console.log("deleteList", deleteList)
+                let newComment = this.data.comment
+                newComment.replyList = newComment.replyList.filter(item => {
+                  return deleteList.indexOf(item.id) == -1
                 })
+                //回调函数,从视图变量中删除回复,更新评论
+                this.setData({
+                  comment: newComment
+                })
+              }
+            })
+          }
+        }).catch(res => {
+          if (res.status == 300) {
+            wx.showToast({
+              title: '删除回复失败,请检查网络~',
+              icon: 'none',
+              duration: 1000
+            })
+          } else {
+            //重新登陆
+            login().then(res => {
+              console.log("sessionId过期,重新登录")
+              wx.showToast({
+                title: '登陆已过期~已经为您重新登陆',
+                icon: 'none',
+                duration: 1500,
               })
-            }
-          })
+            })
+          }
+        })
       }
     })
   },

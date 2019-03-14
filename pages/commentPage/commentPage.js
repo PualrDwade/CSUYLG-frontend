@@ -46,17 +46,25 @@ Page({
    */
   onLoad: function (options) {
     //从url中获取文章id
+    console.log(options.articleID)
     if (options.articleID) {
       this.setData({
         articleID: options.articleID,
       })
     } else {
+      //否则使用测试文章数据
       this.setData({
         articleID: 'test1',
       })
     }
     //得到promise的callback之后设置数据,维持同步请求
     getApp().globalData.hasLoginStatus.then(() => {
+      //一开始显示loading,提高用户体验
+      wx.showToast({
+        title: '加载文章评论中....',
+        icon: 'loading',
+        mask: true,
+      })
       //设置(页面级别)sessionId和openId
       this.setData({
         openId: wx.getStorageSync('openId'),
@@ -64,25 +72,27 @@ Page({
       //随后发起api请求
       api.getComments(this.data.articleID, this.data.page).then(res => {
         if (res.status == 200) {
-          //判断是否有评论内容,如果没有,则设置默认的初始值
+          wx.hideToast()
           this.setData({
             commentList: res.data.data
           })
           this.refreshFloor()
         }
-      }).catch(res => {
-        console.log(res)
-        wx.showModal({
-          title: '提示',
-          content: '文章评论获取失败,请检查网络~',
+      }).catch(() => {
+        wx.showToast({
+          title: '文章评论获取失败,请检查网络~',
+          icon: 'none',
+          duration: 1000
         })
       })
     }).catch(() => {
       wx.showToast({
-        title: '登陆状态获取失败',
-        icon: 'none'
+        title: '登陆状态获取失败,请检查网络~',
+        icon: 'none',
+        duration: 1000
       })
     })
+    //最后取消loading的显示
   },
 
 
@@ -264,7 +274,6 @@ Page({
         if (!res.confirm) {
           return
         }
-        console.log("删除评论" + e.currentTarget.dataset.commentid)
         const commentId = e.currentTarget.dataset.commentid
         api.deleteComment(commentId).then(res => {
           if (res.status == 200) {
@@ -290,9 +299,7 @@ Page({
               icon: 'success',
               duration: 1000
             })
-          }
-        }).catch(res => {
-          if (res.status == 401) {
+          } else if (res.status == 401) {
             //重新登陆
             api.login().then(res => {
               console.log("sessionId过期,重新登录")
@@ -345,5 +352,5 @@ Page({
     wx.navigateTo({
       url: '../commentDetail/commentDetail?commentId=' + commentId,
     });
-  }
+  },
 })
