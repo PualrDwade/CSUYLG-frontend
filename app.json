@@ -11,23 +11,23 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#13b2ae",
-    "backgroundColor": "#fff",
+    "color": "#383e4a",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#f4f4f4",
     "position": "bottom",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/commentPage/commentPage",
         "text": "首页",
-        "iconPath": "icons/home.svg",
-        "selectedIconPath": "icon/home_selected.svg"
+        "iconPath": "image/home.png",
+        "selectedIconPath": "image/home_selected.png"
       },
       {
         "pagePath": "pages/index/index",
-        "text": "个人中心",
-        "iconPath": "",
-        "selectedIconPath": ""
+        "text": "授权",
+        "iconPath": "image/person.png",
+        "selectedIconPath": "image/person_selected.png"
       }
     ]
   }
