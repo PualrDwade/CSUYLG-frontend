@@ -10,7 +10,8 @@ import {
   bussinessTemplate
 } from '../../../utils/bussinessTemplate';
 import {
-  contentValidate
+  contentValidate,
+  filterEmoji
 } from '../../../utils/util';
 
 Component({
@@ -74,7 +75,7 @@ Component({
         let commentDTO = {
           fromUid: this.data.openId,
           passageId: this.data.targetId,
-          content: this.data.inputValue
+          content: filterEmoji(this.data.inputValue) //过滤emoji
         }
         console.log('对文章发起评论,dto:', commentDTO)
         //使用业务模版调用具体的业务
@@ -145,7 +146,7 @@ Component({
      * 异常只需要用reject将api的响应返回
      * 减轻了方法的职责
      * 使用模版方法设计模式减少重复验证代码
-     * @param {评论传输对象,对文章进行评论} commentDTO 
+     * @param {评论传输对象} commentDTO 
      */
     addComment: function (commentDTO) {
       return new Promise(function (resolve, reject) {
@@ -154,7 +155,7 @@ Component({
           wx.showToast({
             title: '评论或回复内容不能为空,长度在10-30字之间哟~',
             icon: 'none',
-            duration: 2000
+            duration: 1500
           })
           return
         }
