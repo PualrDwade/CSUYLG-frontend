@@ -7,8 +7,8 @@ import {
 
 Page({
   data: {
+    isAuth: false,
     userInfo: {},
-    hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
@@ -25,8 +25,16 @@ Page({
         if (res.status == 200) {
           console.log('auth api请求成功~数据同步成功!')
         }
+        this.setData({
+          isAuth: true
+        })
       }).catch(res => {
-        console.log('auth api请求失败~数据同步失败')
+        wx.showToast({
+          title: '授权失败~请检查网络',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
+        });
       })
       wx.navigateBack({})
     } else {
@@ -37,9 +45,10 @@ Page({
   // 页面初始化加载
   onLoad: function () {
     if (wx.getStorageSync('userInfo')) {
+      //已经授权过了
       this.setData({
         userInfo: wx.getStorageSync('userInfo'),
-        hasUserInfo: true
+        isAuth: true
       })
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -47,7 +56,6 @@ Page({
       app.userInfoReadyCallback = res => {
         this.setData({
           userInfo: res.userInfo,
-          hasUserInfo: true
         })
       }
     } else {
@@ -60,7 +68,7 @@ Page({
           )
           this.setData({
             userInfo: res.userInfo,
-            hasUserInfo: true
+            isAuth: true
           })
         }
       })

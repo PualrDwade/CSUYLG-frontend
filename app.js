@@ -5,7 +5,7 @@ App({
   // 设置全局数据
   globalData: {
     // baseURL:"http://localhost:8080",
-    baseURL: "https://api.xuanxuan.store",
+    baseURL: "https://csuylg.csu.edu.cn/zndxylg",
     hasLoginStatus: null
   },
 
