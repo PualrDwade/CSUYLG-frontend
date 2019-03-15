@@ -13,6 +13,15 @@ export const contentValidate = function (content) {
 }
 
 /**
+ * 判断搜索内容是否为空 
+ * @param {string} content 
+ */
+export const searchValidate = function (content) {
+  content = filterEmoji(content).replace(/\s+/g, "")
+  return content != "";
+}
+
+/**
  * 根据id修改点赞状态
  * list可以是评论list,也可以说是回复list
  * @param {string} id

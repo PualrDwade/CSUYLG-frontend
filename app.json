@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/commentPage/commentPage",
+    "pages/home/home",
     "pages/index/index",
+    "pages/commentPage/commentPage",
     "pages/commentDetail/commentDetail"
   ],
   "window": {
@@ -18,7 +19,7 @@
     "borderStyle": "white",
     "list": [
       {
-        "pagePath": "pages/commentPage/commentPage",
+        "pagePath":"pages/home/home",
         "text": "首页",
         "iconPath": "image/home.png",
         "selectedIconPath": "image/home_selected.png"

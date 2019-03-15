@@ -1,0 +1,29 @@
+<view>
+    <!-- 头部样式 -->
+    <view class="header">
+        <image style='border-radius:50%' class="icon" lazy-load="{{true}}" src="/icons/csu.png" />
+    </view>
+    <!-- 使用卡片效果 -->
+    <view class="card">
+        <view>
+            <form bindsubmit="search" class="searchForm">
+                <input value="{{inputValue}}" bindinput="bindKeyInput" placeholder="输入推送文章id,查看对应评论内容~" />
+                <!-- 按钮 -->
+                <view>
+                    <button type="primary" form-type="submit">搜索</button>
+                </view>
+            </form>
+        </view>
+    </view>
+    <view class="title">简易教程:</view>
+    <view class="card">
+        <view>
+            <view class="info">
+                <view>1.打开小程序,输入推送文章id查看文章评论</view>
+                <view>2.在推送中嵌入此小程序,为页面设置文章id</view>
+                <view>3.页面:/commentPage/commentPage/文章id</view>
+                <view>4.用户阅读推送时便可进入小程序发表评论</view>
+            </view>
+        </view>
+    </view>
+</view>
