@@ -46,10 +46,10 @@ Page({
    */
   onLoad: function (options) {
     //从url中获取文章id
-    console.log(options.articleID)
-    if (options.articleID) {
+    console.log(options.articleId)
+    if (options.articleId) {
       this.setData({
-        articleID: options.articleID,
+        articleID: options.articleId,
       })
     } else {
       //否则使用测试文章数据
