@@ -134,7 +134,8 @@ Component({
     bindKeyInput: function (e) {
       //设置值,绑定输入内容框
       this.setData({
-        inputValue: e.detail.value
+        //确保为字符串
+        inputValue: ""+e.detail.value
       })
     },
 

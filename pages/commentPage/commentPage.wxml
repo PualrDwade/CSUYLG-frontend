@@ -7,59 +7,62 @@
   <!-- 评论区 -->
   <view class='commentArea'>
     <!-- 一条评论 -->
-    <view class='comment' wx:key="{{index}}" wx:for="{{commentList}}">
-      <view class='comment2'>
-        <!-- 左侧头像区 -->
-        <view class='avatarArea' data-openId='{{item.fromUid}}' bindtap='clickUser'>
-          <image lazy-load='true' class='avatar' src='{{item.avatar}}'></image>
-        </view>
-        <!-- 右侧具体信息区 -->
-        <view class='commentRightArea'>
-          <view class='userArea'>
-            <view class='username' hover-class='hover' data-openid='{{item.fromUid}}' bindtap='clickUser'>
-              {{item.username}}
+    <view class="noCommentInfo" wx:if="{{commentList.length==0}}">当前文章没有评论~快来抢沙发!</view>
+    <view wx:else>
+      <view class='comment' wx:key="{{index}}" wx:for="{{commentList}}">
+        <view class='comment2'>
+          <!-- 左侧头像区 -->
+          <view class='avatarArea' data-openId='{{item.fromUid}}' bindtap='clickUser'>
+            <image lazy-load='true' class='avatar' src='{{item.avatar}}'></image>
+          </view>
+          <!-- 右侧具体信息区 -->
+          <view class='commentRightArea'>
+            <view class='userArea'>
+              <view class='username' hover-class='hover' data-openid='{{item.fromUid}}' bindtap='clickUser'>
+                {{item.username}}
+              </view>
+              <view class='floor'>{{item.floor}}楼</view>
             </view>
-            <view class='floor'>{{item.floor}}楼</view>
-          </view>
-          <!-- 评论内容 -->
-          <view class='commentContentArea' data-commentid='{{item.id}}' data-content='{{item.content}}' data-type='1' data-username='{{item.username}}' bindtap='showCommentDetail' hover-class='hover' bindlongpress='copy'>
-            <text style="word-break: break-all;">{{item.content}}</text>
-          </view>
-          <!-- 操作区 -->
-          <view class='dealArea'>
-            <view class='dealLeft'>
-              <view class='date'>{{item.createTime}}</view>
-              <view wx:if="{{item.fromUid==openId}}" class='delete' bindtap='deleteComment' data-commentId='{{item.id}}'>
-                删除
+            <!-- 评论内容 -->
+            <view class='commentContentArea' data-commentid='{{item.id}}' data-content='{{item.content}}' data-type='1' data-username='{{item.username}}' bindtap='showCommentDetail' hover-class='hover' bindlongpress='copy'>
+              <text style="word-break: break-all;">{{item.content}}</text>
+            </view>
+            <!-- 操作区 -->
+            <view class='dealArea'>
+              <view class='dealLeft'>
+                <view class='date'>{{item.createTime}}</view>
+                <view wx:if="{{item.fromUid==openId}}" class='delete' bindtap='deleteComment' data-commentId='{{item.id}}'>
+                  删除
+                </view>
+              </view>
+              <view class='dealRight' data-totype='{{1}}' data-commentid='{{item.id}}' bindtap='starHandle'>
+                <view class='iconArea'>
+                  <view class='zanNum'>{{item.zanNum}}</view>
+                  <image lazy-load="true" wx:if="{{item.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
+                  <image lazy-load="true" wx:if="{{!item.isZan}}" src='../../icons/zan.png' class='Icon'></image>
+                </view>
               </view>
             </view>
-            <view class='dealRight' data-totype='{{1}}' data-commentid='{{item.id}}' bindtap='starHandle'>
-              <view class='iconArea'>
-                <view class='zanNum'>{{item.zanNum}}</view>
-                <image lazy-load="true" wx:if="{{item.isZan}}" src='../../icons/zan_focus.png' class='Icon'></image>
-                <image lazy-load="true" wx:if="{{!item.isZan}}" src='../../icons/zan.png' class='Icon'></image>
+            <!-- 评论对应的回复区 -->
+            <!-- 修改,点击回复,弹出输入框进行输入 -->
+            <view wx:if="{{item.replyList.length!=0}}" class='replyArea' data-commentid='{{item.id}}' bind:tap="showCommentDetail">
+              <!-- 一条回复 -->
+              <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2'>
+                <view wx:if="{{rindex<3}}">
+                  <!-- <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}"> -->
+                  <text style="word-break: break-all;">
+                    <text class='userName'>{{i.fromUname}}</text>
+                    <text decode="{{true}}" space="{{true}}" wx:if="{{i.replyType==2}}">回复</text>
+                    <text class='userName' wx:if="{{i.replyType==2}}">{{i.toUname}}</text>
+                    <text decode="{{true}}" space="{{true}}">&nbsp;:&nbsp;{{i.content}}</text>
+                  </text>
+                </view>
               </view>
-            </view>
-          </view>
-          <!-- 评论对应的回复区 -->
-          <!-- 修改,点击回复,弹出输入框进行输入 -->
-          <view wx:if="{{item.replyList.length!=0}}" class='replyArea' data-commentid='{{item.id}}' bind:tap="showCommentDetail">
-            <!-- 一条回复 -->
-            <view class="reply" wx:key="{{index}}" wx:for-item="i" wx:for-index="rindex" wx:for="{{item.replyList}}" hover-class='hover' data-content='{{i.content}}' data-type='2'>
-              <view wx:if="{{rindex<3}}">
-                <!-- <view wx:if="{{item.show | ((item.replyNum==3) & rindex<3) |(!(item.replyNum==4) & rindex<3) }}"> -->
-                <text style="word-break: break-all;">
-                  <text class='userName'>{{i.fromUname}}</text>
-                  <text decode="{{true}}" space="{{true}}" wx:if="{{i.replyType==2}}">回复</text>
-                  <text class='userName' wx:if="{{i.replyType==2}}">{{i.toUname}}</text>
-                  <text decode="{{true}}" space="{{true}}">&nbsp;:&nbsp;{{i.content}}</text>
-                </text>
+              <view wx:if="{{item.replyNum>=3}}" data-commentid='{{item.id}}' class='username' hover-class='hover'>
+                查看全部
+                <text class='userName'>{{item.replyNum}}</text>
+                条回复
               </view>
-            </view>
-            <view wx:if="{{item.replyNum>=3}}" data-commentid='{{item.id}}' class='username' hover-class='hover'>
-              查看全部
-              <text class='userName'>{{item.replyNum}}</text>
-              条回复
             </view>
           </view>
         </view>

@@ -249,3 +249,11 @@
 .focusInputArea {
   width: 100%;
 }
+
+.noCommentInfo{
+  margin-top: 45%;
+  text-align: center;
+  color: #aeaaaa;
+  font-size: 35rpx;
+  
+}
