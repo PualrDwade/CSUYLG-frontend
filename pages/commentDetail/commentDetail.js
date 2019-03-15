@@ -32,6 +32,7 @@ Page({
    * 跳转到页面底部
    */
   jumpToDottom: function () {
+    console.log("跳转到底部")
     // 获取容器高度，使页面滚动到容器底部
     wx.createSelectorQuery().select('#commentDetail').boundingClientRect(function (rect) {
       // 使页面滚动到底部
