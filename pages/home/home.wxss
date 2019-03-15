@@ -10,7 +10,7 @@
 .title{
     margin-top: 35px;
     margin-left: 18px;
-    color: #7a7878;
+    color: #585656;
     font-size: 38rpx;
 }
 
@@ -24,13 +24,13 @@
 }
 
 .searchForm input {
-    margin: 10px;
+    margin: 12px;
 }
 
 .searchForm button {
-    font-size: 38rpx;
-    width: 40%;
-    margin-top: 10rpx;
+    font-size: 34rpx;
+    width: 92%;
+    margin-top: 50rpx;
     height: 90rpx;
     margin-bottom: 10rpx;
 }

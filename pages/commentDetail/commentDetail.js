@@ -28,6 +28,18 @@ Page({
     targetId: null
   },
 
+  /**
+   * 跳转到页面底部
+   */
+  jumpToDottom: function () {
+    // 获取容器高度，使页面滚动到容器底部
+    wx.createSelectorQuery().select('#commentDetail').boundingClientRect(function (rect) {
+      // 使页面滚动到底部
+      wx.pageScrollTo({
+        scrollTop: rect.bottom
+      })
+    }).exec()
+  },
 
   /**
    * 页面重置函数,指定默认的数据
@@ -120,6 +132,8 @@ Page({
   bindSendSucceed: function (e) {
     console.log('回复内容发送成功,data:', e)
     this.refreshComment()
+    //转到底部
+    this.jumpToDottom()
   },
 
 

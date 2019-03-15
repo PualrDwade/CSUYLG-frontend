@@ -1,5 +1,5 @@
 <!-- pages/commentDetail/commentDetail.wxml -->
-<view>
+<view id="commentDetail">
   <view class='commentArea'>
     <!-- 一条评论 -->
     <view class='comment'>

@@ -7,7 +7,7 @@
     <view class="card">
         <view>
             <form bindsubmit="search" class="searchForm">
-                <input value="{{inputValue}}" bindinput="bindKeyInput" placeholder="输入推送文章id,查看对应评论内容~" />
+                <input value="{{inputValue}}" bindinput="bindKeyInput" placeholder="输入推送文章id搜索对应评论" />
                 <!-- 按钮 -->
                 <view>
                     <button type="primary" form-type="submit">搜索</button>
@@ -15,7 +15,7 @@
             </form>
         </view>
     </view>
-    <view class="title">简易教程:</view>
+    <view class='title' >简易教程:</view>
     <view class="card">
         <view>
             <view class="info">
