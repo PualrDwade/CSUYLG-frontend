@@ -99,7 +99,7 @@ Component({
       } else {
         //进行回复
         let replyDTO = {
-          content: this.data.inputValue,
+          content: filterEmoji(this.data.inputValue),
           fromUid: this.data.openId,
           replyType: this.data.type,
           replyId: this.data.targetId

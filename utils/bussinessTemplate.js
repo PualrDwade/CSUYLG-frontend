@@ -56,10 +56,10 @@ export const bussinessTemplate = function (functionalAPI, data) {
       }
     }).catch(res => {
       if (res.status == 300) {
-        console.log('用户还没有授权,进行授权操作')
-        wx.navigateTo({
-          url: '../index/index'
-        })
+        //跳转tab
+        wx.switchTab({
+          url: '/pages/index/index'
+        });
       } else if (res.status == 401) {
         //重新登陆
         login().then(res => {
