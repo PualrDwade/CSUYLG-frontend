@@ -1,1 +1,42 @@
-/* pages/tools/tools.wxss */
+.header {
+    margin-top: 150rpx;
+    text-align: center;
+    color: #585656;
+    font-size: 40rpx;
+}
+
+.title{
+    margin-top: 35px;
+    margin-left: 18px;
+    color: #585656;
+    font-size: 38rpx;
+}
+
+.searchForm button {
+    font-size: 34rpx;
+    width: 92%;
+    margin-top: 50rpx;
+    height: 90rpx;
+    margin-bottom: 10rpx;
+}
+
+.searchForm text {
+    text-align: center;
+    color: #918d8d;
+    font-size: 38rpx;
+    margin: 12px;
+}
+
+.card {
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 4px 2px 1px #b9b7b7;
+    margin: 15px;
+    position: relative;
+}
+
+.info{
+    font-size: 33rpx;
+    color: #7a7878
+}

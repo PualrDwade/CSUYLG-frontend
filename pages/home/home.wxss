@@ -8,7 +8,7 @@
 }
 
 .title{
-    margin-top: 35px;
+    margin-top: 30px;
     margin-left: 18px;
     color: #585656;
     font-size: 38rpx;
@@ -28,6 +28,8 @@
 }
 
 .searchForm button {
+    background-color: #1296db;
+    color: #ffffff;
     font-size: 34rpx;
     width: 92%;
     margin-top: 50rpx;
@@ -54,13 +56,3 @@
     height: 200px;
     background-color: #eeeeee;
 }
-
-/*按钮*/
-.loginBtnView {
-    width: 100%;
-    height: auto;
-    background-color: #ffffff;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-  }

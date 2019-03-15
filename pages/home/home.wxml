@@ -10,19 +10,21 @@
                 <input value="{{inputValue}}" bindinput="bindKeyInput" placeholder="输入推送文章id搜索对应评论" />
                 <!-- 按钮 -->
                 <view>
-                    <button type="primary" form-type="submit">搜索</button>
+                    <button form-type="submit">搜索</button>
                 </view>
             </form>
         </view>
     </view>
-    <view class='title' >简易教程:</view>
+    <view class='title'>简易教程:</view>
     <view class="card">
         <view>
             <view class="info">
-                <view>1.打开小程序,输入推送文章id查看文章评论</view>
-                <view>2.在推送中嵌入此小程序,为页面设置文章id</view>
-                <view>3.页面:/commentPage/commentPage/文章id</view>
-                <view>4.用户阅读推送时便可进入小程序发表评论</view>
+                <view>1. 打开小程序,输入推送文章id查看文章评论</view>
+                <view>2. 在推送中嵌入此小程序,为页面设置文章id</view>
+                <view>3. 页面:/commentPage/commentPage</view>
+                <view>4. 设值:?articleId="{你的文章id}"</view>
+                <view>5. 用户阅读推送时便可进入小程序发表评论</view>
+                <view>6. 可以使用小程序自带工具生成文章id</view>
             </view>
         </view>
     </view>

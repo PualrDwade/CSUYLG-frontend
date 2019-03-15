@@ -1,4 +1,5 @@
-// pages/tools/tools.js
+
+import * as util from '../../utils/util';
 Page({
 
   /**
@@ -6,6 +7,33 @@ Page({
    */
   data: {
 
+  },
+
+  /**
+   * 表单提交生成UUID,复制进入剪切板
+   */
+  generate: function () {
+    let uuid = util.generateUUID();
+    wx.setClipboardData({
+      data: uuid,
+      success: (result) => {
+        wx.hideToast();
+        wx.showModal({
+          title: '成功',
+          content: '生成文章id:\n' + uuid + "\n已复制到剪切板",
+          confirmText: '确定',
+          showCancel: false,
+          confirmColor: '#3CC51F',
+          success: (result) => {
+            if (result.confirm) {
+
+            }
+          },
+          fail: () => { },
+          complete: () => { }
+        });
+      },
+    })
   },
 
   /**

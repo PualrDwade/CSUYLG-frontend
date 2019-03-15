@@ -64,3 +64,17 @@ export const findReplystoDelete = function (targetId, replyList) {
 export const filterEmoji = function (name) {
   return name.replace(/[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF][\u200D|\uFE0F]|[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF]|[0-9|*|#]\uFE0F\u20E3|[0-9|#]\u20E3|[\u203C-\u3299]\uFE0F\u200D|[\u203C-\u3299]\uFE0F|[\u2122-\u2B55]|\u303D|[\A9|\AE]\u3030|\uA9|\uAE|\u3030/ig, "")
 }
+
+/**
+ * 随机生成UUID
+ */
+export const generateUUID = function () {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+  });
+  console.log('uuid:', uuid)
+  return uuid;
+}

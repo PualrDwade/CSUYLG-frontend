@@ -26,17 +26,17 @@
         "selectedIconPath": "image/home_selected.png"
       },
       {
-        "pagePath": "pages/index/index",
-        "text": "授权",
-        "iconPath": "image/person.png",
-        "selectedIconPath": "image/person_selected.png"
-      },
-      {
         "pagePath": "pages/tools/tools",
         "text": "工具",
         "iconPath": "image/tools.png",
         "selectedIconPath": "image/tools_selected.png"
-      }
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "授权",
+        "iconPath": "image/person.png",
+        "selectedIconPath": "image/person_selected.png"
+      }     
     ]
   }
 }

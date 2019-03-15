@@ -1,2 +1,28 @@
-<!--pages/tools/tools.wxml-->
-<text>pages/tools/tools.wxml</text>
+<view>
+    <!-- 头部样式 -->
+    <view class="header">自动生成文章id小工具</view>
+    <!-- 使用卡片效果 -->
+    <view style="margin-top:150rpx;"></view>
+    <view class="card">
+        <view>
+            <form bindsubmit="generate" class="searchForm">
+                <text>点击生成文章id</text>
+                <!-- 按钮 -->
+                <view>
+                    <button type="primary" form-type="submit">生成</button>
+                </view>
+            </form>
+        </view>
+    </view>
+    <view class='title'>简易教程:</view>
+    <view class="card">
+        <view>
+            <view class="info">
+                <view>1. 此工具是用来填写page传值中的文章id</view>
+                <view>2. 使用了UUID算法保证唯一性</view>
+                <view>3. 成功生成之后会复制到剪切板</view>
+                <view>4. 填入到推送中小程序页面文章id信息</view>
+            </view>
+        </view>
+    </view>
+</view>
