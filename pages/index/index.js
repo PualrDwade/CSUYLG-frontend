@@ -44,34 +44,41 @@ Page({
 
   // 页面初始化加载
   onLoad: function () {
-    if (wx.getStorageSync('userInfo')) {
-      //已经授权过了
-      this.setData({
-        userInfo: wx.getStorageSync('userInfo'),
-        isAuth: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          wx.setStorageSync(
-            'userInfo',
-            res.userInfo
-          )
+    //获取用户授权状态,如果已授权,则同步授权数据
+    wx.getSetting({
+      success: res => {
+        //用户已经拿到了授权,并且本地存储了授权的用户信息
+        if (res.authSetting['scope.userInfo'] && wx.getStorageSync('userInfo')) {
+          //已经授权过了
           this.setData({
-            userInfo: res.userInfo,
+            userInfo: wx.getStorageSync('userInfo'),
             isAuth: true
           })
         }
-      })
-    }
+        else if (this.data.canIUse) {
+          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+          // 所以此处加入 callback 以防止这种情况
+          app.userInfoReadyCallback = res => {
+            this.setData({
+              userInfo: res.userInfo,
+            })
+          }
+        } else {
+          // 在没有 open-type=getUserInfo 版本的兼容处理
+          wx.getUserInfo({
+            success: res => {
+              wx.setStorageSync(
+                'userInfo',
+                res.userInfo
+              )
+              this.setData({
+                userInfo: res.userInfo,
+                isAuth: true
+              })
+            }
+          })
+        }
+      }
+    })
   },
 })

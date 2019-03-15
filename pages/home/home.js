@@ -27,7 +27,7 @@ Page({
    * @param {事件参数} e 
    */
   search: function (e) {
-    if (!util.searchValidate(this.data.inputValue)) {
+    if (!util.searchValidate("" + this.data.inputValue)) {
       wx.showToast({
         title: '请输入合法的文章Id',
         icon: 'none',
