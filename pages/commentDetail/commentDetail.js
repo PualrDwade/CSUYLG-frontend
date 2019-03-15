@@ -132,9 +132,10 @@ Page({
    */
   bindSendSucceed: function (e) {
     console.log('回复内容发送成功,data:', e)
-    this.refreshComment()
-    //转到底部
-    this.jumpToDottom()
+    this.refreshComment().then(result => {
+      //转到底部
+      this.jumpToDottom()
+    })
   },
 
 

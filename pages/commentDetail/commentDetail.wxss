@@ -68,10 +68,7 @@
   justify-content: center;
 }
 .extend::after {
-  top: -10rpx;
-  left: -10rpx;
-  right: -10rpx;
-  bottom: -10rpx;
+  padding: 20px;
 }
 .dealRight,.dealLeft{
   display: flex;
