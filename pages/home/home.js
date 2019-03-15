@@ -28,7 +28,7 @@ Page({
   search: function (e) {
     if (!util.searchValidate(this.data.inputValue)) {
       wx.showToast({
-        title: '文章id不能为空!',
+        title: '请输入合法的文章Id',
         icon: 'none',
         duration: 1500,
         mask: true,

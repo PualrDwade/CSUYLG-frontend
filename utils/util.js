@@ -17,8 +17,8 @@ export const contentValidate = function (content) {
  * @param {string} content 
  */
 export const searchValidate = function (content) {
-  content = filterEmoji(content).replace(/\s+/g, "")
-  return content != "";
+  content = content.replace(/\s+/g, "")
+  return content != "" && content == filterEmoji(content);
 }
 
 /**
