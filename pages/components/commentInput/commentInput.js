@@ -135,7 +135,7 @@ Component({
       //设置值,绑定输入内容框
       this.setData({
         //确保为字符串
-        inputValue: ""+e.detail.value
+        inputValue: "" + e.detail.value
       })
     },
 
