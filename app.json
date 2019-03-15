@@ -3,7 +3,8 @@
     "pages/home/home",
     "pages/index/index",
     "pages/commentPage/commentPage",
-    "pages/commentDetail/commentDetail"
+    "pages/commentDetail/commentDetail",
+    "pages/tools/tools"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -19,7 +20,7 @@
     "borderStyle": "white",
     "list": [
       {
-        "pagePath":"pages/home/home",
+        "pagePath": "pages/home/home",
         "text": "首页",
         "iconPath": "image/home.png",
         "selectedIconPath": "image/home_selected.png"
@@ -29,6 +30,12 @@
         "text": "授权",
         "iconPath": "image/person.png",
         "selectedIconPath": "image/person_selected.png"
+      },
+      {
+        "pagePath": "pages/tools/tools",
+        "text": "工具",
+        "iconPath": "image/tools.png",
+        "selectedIconPath": "image/tools_selected.png"
       }
     ]
   }
